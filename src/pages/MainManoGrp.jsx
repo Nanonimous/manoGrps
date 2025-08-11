@@ -26,7 +26,7 @@ export const MainManoGrp = () => {
     }}>
       <Navbar_1
         brandName="Mano Groups"
-        backgroundColor="#ffffff"
+        backgroundColor="#ffffff "
         navigationLinks={[
           { href: "#home", text: "Home" },
           { href: "#mano-stores", text: "Mano Store's" },
