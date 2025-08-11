@@ -1,8 +1,9 @@
 .shopNowContainer {
   width: 100%;
-  height: 300px;
-background: RGBA(53, 94, 59, 1);
-background: linear-gradient(90deg, rgba(53, 94, 59, 1) 22%, rgba(53, 94, 59, 1) 57%, rgba(255, 255, 255, 1) 100%);  overflow: hidden;
+  height: 320px;
+  background: RGBA(53, 94, 59, 1);
+  background: linear-gradient(90deg, rgba(53, 94, 59, 1) 22%, rgba(53, 94, 59, 1) 57%, rgba(255, 255, 255, 1) 100%);
+  overflow: hidden;
   margin: 40px 0;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
@@ -28,7 +29,7 @@ background: linear-gradient(90deg, rgba(53, 94, 59, 1) 22%, rgba(53, 94, 59, 1) 
 
 .mainTitle {
   font-family: "Poppins", sans-serif;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   font-weight: 700;
   margin: 0 0 8px 0;
   line-height: 1.2;
@@ -39,7 +40,7 @@ background: linear-gradient(90deg, rgba(53, 94, 59, 1) 22%, rgba(53, 94, 59, 1) 
 
 .subTitle {
   font-family: "Poppins", sans-serif;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   font-weight: 700;
   margin: 0 0 8px 0;
   line-height: 1.2;
@@ -50,7 +51,7 @@ background: linear-gradient(90deg, rgba(53, 94, 59, 1) 22%, rgba(53, 94, 59, 1) 
 
 .highlightTitle {
   font-family: "Poppins", sans-serif;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   font-weight: 700;
   margin: 0 0 30px 0;
   line-height: 1.2;
@@ -82,7 +83,7 @@ background: linear-gradient(90deg, rgba(53, 94, 59, 1) 22%, rgba(53, 94, 59, 1) 
 .imageSection {
   flex: 1;
   position: relative;
-  height: 130%;
+  height:130%;
   width: 130%;
   display: flex;
   align-items: center;
@@ -91,14 +92,14 @@ background: linear-gradient(90deg, rgba(53, 94, 59, 1) 22%, rgba(53, 94, 59, 1) 
 
 .planeContainer {
   position: absolute;
-  right: -100px;
-  bottom: -55px;
+  right: -200px;
+  bottom: -20px;
   z-index: 4;
 }
 
 .planeImage {
-  height: 120%;
-  width: 120%;
+  height: 500px;
+  width: auto;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
 }
 
@@ -116,58 +117,76 @@ background: linear-gradient(90deg, rgba(53, 94, 59, 1) 22%, rgba(53, 94, 59, 1) 
 /* Responsive Design */
 @media (max-width: 992px) {
   .shopNowContainer {
-    height: 300px;
+    height: 280px;
     margin: 30px 0;
   }
 
   .contentWrapper {
     padding: 0 30px;
-    text-align: center;
   }
 
   .textSection {
-    text-align: center;
+    max-width: 55%;
   }
 
   .mainTitle,
   .subTitle,
   .highlightTitle {
-    font-size: 2.2rem;
+    font-size: 1.9rem;
   }
 
   .planeContainer {
-    right: -80px;
-    bottom: -40px;
+    right: -60px;
+    bottom: -30px;
   }
 
   .planeImage {
-    height: 180px;
+    height: 240px;
     width: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .shopNowContainer {
+    height: 260px;
+  }
+
+  .mainTitle,
+  .subTitle,
+  .highlightTitle {
+    font-size: 1.8rem;
+  }
+
+  .planeContainer {
+    right: -55px;
+    bottom: -25px;
+  }
+
+  .planeImage {
+    height: 220px;
   }
 }
 
 @media (max-width: 768px) {
   .shopNowContainer {
-    height: 220px;
+    height: 240px;
     margin: 20px 0;
   }
 
   .contentWrapper {
     flex-direction: row;
     padding: 20px;
-    text-align: center;
   }
 
   .textSection {
-    max-width: 60%;
+    max-width: 58%;
     margin-bottom: 0;
-    text-align: center;
   }
 
   .mainTitle,
   .subTitle,
   .highlightTitle {
-    font-size: 2rem;
+    font-size: 1.2rem;
     margin-bottom: 4px;
   }
 
@@ -175,37 +194,42 @@ background: linear-gradient(90deg, rgba(53, 94, 59, 1) 22%, rgba(53, 94, 59, 1) 
     margin-bottom: 15px;
   }
 
+  .shopNowButton {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+
   .planeContainer {
-    right: -100px;
-    bottom: -10px;
+    right: -70px;
+    bottom: -30px;
   }
 
   .planeImage {
-    height:350px;
+    height: 350px;
   }
 }
 
 @media (max-width: 480px) {
   .shopNowContainer {
-    height: 180px;
+    height: 200px;
     border-radius: 8px;
+    margin: 15px 0;
   }
 
   .contentWrapper {
     padding: 15px;
-    text-align: center;
   }
 
   .textSection {
-    max-width: 65%;
-    text-align: center;
+    max-width: 62%;
   }
 
   .mainTitle,
   .subTitle,
   .highlightTitle {
-    font-size: 1.8rem;
+    font-size: 1rem;
     margin-bottom: 3px;
+    line-height: 1.1;
   }
 
   .highlightTitle {
@@ -214,52 +238,57 @@ background: linear-gradient(90deg, rgba(53, 94, 59, 1) 22%, rgba(53, 94, 59, 1) 
 
   .shopNowButton {
     padding: 8px 16px;
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .planeContainer {
-    right: -75px;
-    bottom: 20px;
+    right: -70px;
+    bottom: -10px;
   }
 
   .planeImage {
-    height: 220px;
+    height: 250px;
   }
 }
 
 /* Extra small screens */
 @media (max-width: 360px) {
   .shopNowContainer {
-    height: 140px;
+    height: 170px;
+  }
+
+  .contentWrapper {
+    padding: 12px;
   }
 
   .textSection {
-    max-width: 70%;
+    max-width: 65%;
   }
 
   .mainTitle,
   .subTitle,
   .highlightTitle {
-    font-size: 1.6rem;
+    font-size: 0.9rem;
     margin-bottom: 2px;
+    line-height: 1.1;
   }
 
   .highlightTitle {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .shopNowButton {
     padding: 6px 12px;
-    font-size: 11px;
+    font-size: 9px;
   }
 
   .planeContainer {
-    right: -70px;
-    bottom: 10px;
+    right: -30px;
+    bottom: -5px;
   }
 
   .planeImage {
-    height: 200px;
+    height: 130px;
   }
 }
 
