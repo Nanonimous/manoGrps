@@ -1,0 +1,231 @@
+.topBrandsContainer {
+  width: 100%;
+  max-width: 100vw;
+  padding: 60px 0;
+  background-color: #f5f5f5;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.contentWrapper {
+  max-width: 80% ;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.headerSection {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.mainTitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--title-color, #2d5a27) !important;
+  margin: 0 0 10px 0;
+  letter-spacing: 1px;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: rgba(53, 94, 59, 1);
+  margin: 0;
+  font-weight: 400;
+}
+
+.brandsSlider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  mask: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.brandsTrack {
+  display: flex;
+  align-items: center;
+  animation: slideLeft 30s linear infinite;
+  width: max-content;
+}
+
+.brandItem {
+  flex: 0 0 auto;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  min-width: 120px;
+  padding: 10px 20px;
+  background-color: transparent;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.brandItem:hover {
+  transform: translateY(-5px);
+}
+
+.brandLogo {
+  max-height: 60px;
+  max-width: 100px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: brightness(1) contrast(1);
+  transition: filter 0.3s ease;
+}
+
+.brandItem:hover .brandLogo {
+  filter: brightness(1.1) contrast(1.1);
+}
+
+.brandName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333333;
+  text-align: center;
+}
+
+.brandNameFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 80px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.brandNameFallback:hover {
+  background: transparent;
+  transform: translateY(-2px);
+}
+
+/* Animation keyframes */
+@keyframes slideLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(var(--move-distance, -50%));
+  }
+}
+
+/* Pause animation on hover */
+.brandsSlider:hover .brandsTrack {
+  animation-play-state: paused;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .topBrandsContainer {
+    padding: 40px 0;
+  }
+  
+  .contentWrapper {
+    padding: 0 15px;
+  }
+  
+  .headerSection {
+    margin-bottom: 30px;
+  }
+  
+  .mainTitle {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .brandItem {
+    margin-right: 30px;
+    height: 70px;
+    min-width: 100px;
+    padding: 8px 15px;
+  }
+  
+  .brandLogo {
+    max-height: 50px;
+    max-width: 80px;
+  }
+  
+  .brandsTrack {
+    animation-duration: 25s;
+  }
+}
+
+@media (max-width: 480px) {
+  .topBrandsContainer {
+    padding: 30px 0;
+  }
+  
+  .contentWrapper {
+    padding: 0 10px;
+  }
+  
+  .mainTitle {
+    font-size: 1.8rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .brandItem {
+    margin-right: 20px;
+    height: 60px;
+    min-width: 80px;
+    padding: 5px 10px;
+  }
+  
+  .brandLogo {
+    max-height: 40px;
+    max-width: 70px;
+  }
+  
+  .brandsTrack {
+    animation-duration: 20s;
+  }
+  
+  .brandsSlider {
+    mask: linear-gradient(
+      to right,
+      transparent 0%,
+      black 5%,
+      black 95%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(
+      to right,
+      transparent 0%,
+      black 5%,
+      black 95%,
+      transparent 100%
+    );
+  }
+}

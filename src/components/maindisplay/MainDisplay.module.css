@@ -1,0 +1,194 @@
+.mainDisplay {
+  width: 100%;
+  height: 500px;
+  min-height: 450px;
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundContainer {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    #ff6b6b 0%,
+    #4ecdc4 25%,
+    #45b7d1 50%,
+    #96ceb4 75%,
+    #feca57 100%
+  );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-image 0.8s ease-in-out;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.contentContainer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.content {
+  color: white;
+  max-width: 600px;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 0 0 2.5rem 0;
+  opacity: 0.95;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  line-height: 1.4;
+}
+
+.shopButton {
+  display: inline-block;
+  background-color: white;
+  color: #333;
+  padding: 15px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+.shopButton:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  color: #222;
+}
+
+.shopButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .mainDisplay {
+    height: 480px;
+    min-height: 430px;
+  }
+
+  .title {
+    font-size: 2.8rem;
+  }
+
+  .subtitle {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainDisplay {
+    height: 450px;
+    min-height: 400px;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .shopButton {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+  
+  .contentContainer {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainDisplay {
+    height: 380px;
+    min-height: 320px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .shopButton {
+    padding: 10px 25px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Animation for content entrance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.title {
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.subtitle {
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.shopButton {
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+

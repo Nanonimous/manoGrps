@@ -1,0 +1,285 @@
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Top Row Styling */
+.topRow {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0px 17px 10px 0px rgba(0, 0, 0, 0.08);
+
+box-shadow: 0px 30px 12px 0px rgba(0, 0, 0, 0.02);
+
+box-shadow: 0px 47px 13px 0px rgba(0, 0, 0, 0);
+
+}
+
+.topRow .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  height: 70px;
+}
+
+/* Brand Section */
+.brandSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.lionLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brandName {
+  font-size: 24px;
+  font-weight: 700;
+  color: #FF6B35;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  line-height: 1;
+}
+
+.tagline {
+  font-size: 10px;
+  color: #666;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Main Navigation Links */
+.mainNavLinks {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex: 1;
+  justify-content: center;
+}
+
+.mainNavLink {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.mainNavLink:hover {
+  color: var(--hover-color, #FF6B35);
+}
+
+.mainNavLink:active {
+  color: #E55A2B;
+}
+
+/* Right Section */
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.cartIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.cartIcon:hover {
+  color: #333;
+}
+
+.loginSection {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.loginSection:hover {
+  background-color: #f1f3f4;
+}
+
+.userIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.loginText {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Bottom Row - Category Navigation */
+.bottomRow {
+  /* Background color is set dynamically via inline styles */
+  color: white;
+}
+
+.bottomRow .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  height: 50px;
+}
+
+.categoryLinks {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  justify-content: center;
+}
+
+.categoryLink {
+  text-decoration: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.w:hover {
+    transform: translateY(-1px);
+}
+
+.categoryLink:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .topRow .container {
+    padding: 12px 16px;
+    height: 60px;
+  }
+  
+  .brandName {
+    font-size: 20px;
+  }
+  
+  .tagline {
+    font-size: 8px;
+  }
+  
+  .mainNavLinks {
+    gap: 20px;
+  }
+  
+  .mainNavLink {
+    font-size: 14px;
+  }
+  
+  .categoryLinks {
+    gap: 24px;
+  }
+  
+  .categoryLink {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+  
+  .rightSection {
+    gap: 16px;
+  }
+  
+  /* Hide user icon on mobile */
+  .loginSection .userIcon {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .mainNavLinks {
+    display: none;
+  }
+  
+  .categoryLinks {
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .categoryLink {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .bottomRow .container {
+    height: auto;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brandSection {
+    gap: 8px;
+  }
+  
+  .lionLogo svg {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .brandName {
+    font-size: 18px;
+  }
+  
+  .categoryLinks {
+    gap: 12px;
+  }
+  
+  .categoryLink {
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+}

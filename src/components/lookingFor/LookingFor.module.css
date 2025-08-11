@@ -1,0 +1,942 @@
+.lookingForContainer {
+  width: 100%;
+  padding: 60px 20px;
+  background-color: #ffffff;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.sectionTitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--title-color, #e91e63) !important;
+  margin: 0 0 50px 0;
+  letter-spacing: 1px;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.categoriesGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.row1 .sofaCard {
+  flex: 2;
+}
+
+.row1 .sneakersCard,
+.row1 .toyTrainCard {
+  flex: 1;
+}
+
+.row2 .toyTrainCard2 {
+  flex: 1;
+}
+
+.row2 .partyDecorsCard {
+  flex: 1;
+}
+
+.row2 .diamondRingCard {
+  flex: 2;
+}
+
+
+
+.categoryCard {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  min-height: 200px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.categoryCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.categoryInfo {
+  flex: 1;
+  z-index: 2;
+  position: relative;
+}
+
+.categoryLabel {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.categoryTitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: rgba(76, 76, 76, 0.65);
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+.shopButton {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shopButton:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: translateX(5px);
+}
+
+.arrow {
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.shopButton:hover .arrow {
+  transform: translateX(3px);
+}
+
+.imageContainer {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.categoryImage {
+  max-width: 180px;
+  max-height: 180px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.3s ease;
+  box-sizing: border-box;
+}
+
+.categoryCard:hover .categoryImage {
+  transform: scale(1.05);
+}
+
+.sofaCard .categoryLabel {
+  color: rgba(120, 120, 120, 1);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.sofaCard .categoryTitle {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.sofaCard .shopButton {
+  background: rgba(68, 68, 68, 1);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.sofaCard .shopButton:hover {
+  background: rgba(50, 50, 50, 1);
+}
+
+
+
+
+/* Specific card styles */
+.sofaCard {
+  background: rgba(238, 238, 238, 1);
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  padding: 30px;
+  position: relative;
+}
+
+.sofaCard .categoryInfo {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-right: 20px;
+  z-index: 2;
+}
+
+.sofaCard .imageContainer {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: relative;
+}
+
+
+
+
+.sneakersCard .categoryLabel {
+  color: rgba(10, 115, 161, 1);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.sneakersCard .categoryTitle {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+
+
+
+.sneakersCard {
+  background: #D4EDF8;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  padding: 20px;
+  position: relative;
+}
+
+.sneakersCard .categoryInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  z-index: 2;
+}
+
+.sneakersCard .imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  flex: 1;
+  margin-top: auto;
+}
+
+
+.toyTrainCard .categoryLabel {
+  color: rgba(212, 177, 0, 1);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.toyTrainCard .categoryTitle {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+
+.toyTrainCard {
+  background: transparent;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  padding: 20px;
+  position: relative;
+}
+
+.toyTrainCard .categoryInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  z-index: 2;
+}
+
+.toyTrainCard .imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  flex: 1;
+  margin-top: auto;
+}
+
+.toyTrainCard2 .categoryLabel {
+  color: rgba(177, 133, 49, 1);
+}
+
+
+.toyTrainCard2 {
+  background: rgba(242, 231, 227, 1);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  padding: 20px;
+  position: relative;
+}
+
+.toyTrainCard2 .categoryInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  z-index: 2;
+}
+
+.toyTrainCard2 .imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  flex: 1;
+  margin-top: auto;
+}
+
+
+.partyDecorsCard .categoryLabel {
+  color: rgba(37, 208, 44, 1);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.partyDecorsCard .categoryTitle {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+
+.partyDecorsCard {
+  background: rgba(227, 242, 230, 1);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  padding: 20px;
+  position: relative;
+}
+
+.partyDecorsCard .categoryInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  z-index: 2;
+}
+
+.partyDecorsCard .imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  flex: 1;
+  margin-top: auto;
+}
+
+
+.diamondRingCard .categoryLabel {
+  color: rgba(198, 61, 66, 1);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.diamondRingCard .categoryTitle {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+
+.diamondRingCard .shopButton {
+  background: rgba(198, 61, 66, 1);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.diamondRingCard .shopButton:hover {
+  background: rgba(170, 50, 55, 1);
+}
+
+
+.diamondRingCard {
+  background: rgba(250, 232, 232, 1);
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+  padding: 30px;
+  position: relative;
+}
+
+.diamondRingCard .categoryInfo {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-right: 20px;
+  z-index: 2;
+}
+
+.diamondRingCard .imageContainer {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: relative;
+}
+
+
+
+.sofaCard .categoryImage {
+  max-width: 370px;
+  max-height: 300px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  margin-right: -30px;
+  margin-top: 35px;
+}
+
+
+
+.sneakersCard .categoryImage {
+  max-width: 260px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  transform: rotate(-15deg);
+  margin-bottom: 10px;
+}
+
+
+
+.toyTrainCard .categoryImage {
+  max-width: 220px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  margin-top: 20px;
+}
+
+.toyTrainCard .categoryLabel {
+  color: rgba(212, 177, 0, 1);
+}
+
+.toyTrainCard2 .categoryImage {
+  max-width: 180px;
+  max-height: 160px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  transform: rotate(10deg);
+  margin-top: 20px;
+}
+
+.toyTrainCard2 .categoryLabel {
+  color: rgba(177, 133, 49, 1);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.toyTrainCard2 .categoryTitle {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+
+.partyDecorsCard .categoryImage {
+  max-width: 210px;
+  max-height: 190px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  margin-top: 20px;
+}
+
+
+
+.diamondRingCard {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.diamondRingCard .categoryImage {
+  max-width: 240px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  margin-right: 50px;
+}
+
+
+
+
+
+/* Responsive design */
+
+/* Large tablets and small desktops (1200px and below) */
+@media (max-width: 1200px) {
+  .lookingForContainer {
+    padding: 50px 15px;
+  }
+
+  .categoriesGrid {
+    max-width: 1000px;
+    gap: 18px;
+  }
+
+  .row {
+    gap: 18px;
+  }
+
+  .categoryCard {
+    padding: 25px;
+  }
+
+  .sofaCard .categoryTitle,
+  .diamondRingCard .categoryTitle {
+    font-size: 42px;
+  }
+
+  .sneakersCard .categoryTitle,
+  .toyTrainCard .categoryTitle,
+  .toyTrainCard2 .categoryTitle,
+  .partyDecorsCard .categoryTitle {
+    font-size: 28px;
+  }
+}
+
+/* Tablets (992px and below) */
+@media (max-width: 992px) {
+  .lookingForContainer {
+    padding: 40px 15px;
+  }
+
+  .categoriesGrid {
+    gap: 15px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .row1 .sofaCard,
+  .row1 .sneakersCard,
+  .row1 .toyTrainCard,
+  .row2 .toyTrainCard2,
+  .row2 .partyDecorsCard,
+  .row2 .diamondRingCard {
+    flex: 1;
+  }
+
+  .categoryCard {
+    padding: 25px;
+    min-height: 180px;
+  }
+
+  .sofaCard .categoryTitle,
+  .diamondRingCard .categoryTitle {
+    font-size: 36px;
+  }
+
+  .sneakersCard .categoryTitle,
+  .toyTrainCard .categoryTitle,
+  .toyTrainCard2 .categoryTitle,
+  .partyDecorsCard .categoryTitle {
+    font-size: 26px;
+  }
+
+  .categoryImage {
+    max-width: 140px;
+    max-height: 140px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .sofaCard .categoryImage {
+    max-width: 300px;
+    max-height: 240px;
+  }
+
+  .sneakersCard .categoryImage {
+    max-width: 220px;
+    max-height: 180px;
+  }
+
+  .diamondRingCard .categoryImage {
+    max-width: 200px;
+    max-height: 180px;
+  }
+
+  /* Center content when cards stack vertically */
+  .sofaCard,
+  .diamondRingCard {
+    align-items: center;
+    text-align: center;
+  }
+
+  .sofaCard .categoryInfo,
+  .diamondRingCard .categoryInfo {
+    align-items: center;
+    text-align: center;
+  }
+
+  .sofaCard .imageContainer,
+  .diamondRingCard .imageContainer {
+    justify-content: center;
+  }
+}
+
+/* Small tablets and large phones (768px and below) */
+@media (max-width: 768px) {
+  .lookingForContainer {
+    padding: 30px 12px;
+  }
+
+  .sectionTitle {
+    font-size: 26px;
+    margin-bottom: 30px;
+  }
+
+  .categoriesGrid {
+    gap: 12px;
+  }
+
+  .categoryCard {
+    padding: 20px;
+    min-height: 160px;
+  }
+
+  .sofaCard .categoryTitle,
+  .diamondRingCard .categoryTitle {
+    font-size: 32px;
+    margin-bottom: 15px;
+  }
+
+  .sneakersCard .categoryTitle,
+  .toyTrainCard .categoryTitle,
+  .toyTrainCard2 .categoryTitle,
+  .partyDecorsCard .categoryTitle {
+    font-size: 24px;
+  }
+
+  .categoryLabel {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  .shopButton {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+
+  .sofaCard .shopButton,
+  .diamondRingCard .shopButton {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  .categoryImage {
+    max-width: 120px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .sofaCard .categoryImage {
+    max-width: 280px;
+    max-height: 220px;
+    margin-right: 10px;
+  }
+
+  .sneakersCard .categoryImage {
+    max-width: 200px;
+    max-height: 160px;
+  }
+
+  .diamondRingCard .categoryImage {
+    max-width: 180px;
+    max-height: 160px;
+    margin-right: 20px;
+  }
+
+  .imageContainer {
+    margin-top: 10px;
+  }
+
+  /* Center SOFA and DIAMOND RING cards on tablets */
+  .sofaCard,
+  .diamondRingCard {
+    align-items: center;
+    text-align: center;
+  }
+
+  .sofaCard .categoryInfo,
+  .diamondRingCard .categoryInfo {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Mobile phones (480px and below) */
+@media (max-width: 480px) {
+  .lookingForContainer {
+    padding: 25px 10px;
+  }
+
+  .sectionTitle {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+
+  .categoriesGrid {
+    gap: 10px;
+  }
+
+  .categoryCard {
+    padding: 18px;
+    min-height: 140px;
+  }
+
+  .sofaCard,
+  .diamondRingCard {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sofaCard .categoryInfo,
+  .diamondRingCard .categoryInfo {
+    padding-right: 0;
+    margin-bottom: 15px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .sofaCard .imageContainer,
+  .diamondRingCard .imageContainer {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .sofaCard .categoryTitle,
+  .diamondRingCard .categoryTitle {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .sneakersCard .categoryTitle,
+  .toyTrainCard .categoryTitle,
+  .toyTrainCard2 .categoryTitle,
+  .partyDecorsCard .categoryTitle {
+    font-size: 22px;
+  }
+
+  .categoryLabel {
+    font-size: 11px;
+    margin-bottom: 5px;
+  }
+
+  .shopButton {
+    padding: 8px 14px;
+    font-size: 11px;
+  }
+
+  .categoryImage {
+    max-width: 100px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .sofaCard .categoryImage {
+    max-width: 220px;
+    max-height: 180px;
+    margin-right: 0;
+    margin-top: 10px;
+  }
+
+  .sneakersCard .categoryImage {
+    max-width: 160px;
+    max-height: 130px;
+  }
+
+  .diamondRingCard .categoryImage {
+    max-width: 140px;
+    max-height: 120px;
+    margin-right: 0;
+    margin-top: 10px;
+  }
+
+  .imageContainer {
+    margin-top: 10px;
+  }
+}
+
+/* Small mobile phones (360px and below) */
+@media (max-width: 360px) {
+  .lookingForContainer {
+    padding: 20px 8px;
+  }
+
+  .sectionTitle {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .categoriesGrid {
+    gap: 8px;
+  }
+
+  .categoryCard {
+    padding: 15px;
+    min-height: 120px;
+  }
+
+  .sofaCard .categoryTitle,
+  .diamondRingCard .categoryTitle {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .sneakersCard .categoryTitle,
+  .toyTrainCard .categoryTitle,
+  .toyTrainCard2 .categoryTitle,
+  .partyDecorsCard .categoryTitle {
+    font-size: 20px;
+  }
+
+  .categoryLabel {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .shopButton {
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+
+  .categoryImage {
+    max-width: 80px;
+    max-height: 60px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .sofaCard .categoryImage {
+    max-width: 180px;
+    max-height: 140px;
+  }
+
+  .sneakersCard .categoryImage {
+    max-width: 120px;
+    max-height: 100px;
+  }
+
+  .diamondRingCard .categoryImage {
+    max-width: 110px;
+    max-height: 90px;
+  }
+}

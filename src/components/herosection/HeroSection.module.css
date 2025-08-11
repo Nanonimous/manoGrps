@@ -1,0 +1,122 @@
+.heroContainer {
+  width: 100%;
+  min-height: 80vh;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  box-sizing: border-box;
+}
+
+.contentWrapper {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+}
+
+
+
+/* Main Content */
+.mainContent {
+  text-align: center;
+  z-index: 3;
+}
+
+.mainHeading {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 20px 0;
+  letter-spacing: 1px;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subText {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+.shopNowButton {
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.shopNowButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+}
+
+/* Hero Image Area */
+.imageArea {
+  position: relative;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+}
+
+
+
+
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .mainHeading {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroContainer {
+    padding: 40px 15px;
+    min-height: 70vh;
+  }
+
+  .mainHeading {
+    font-size: 2rem;
+  }
+
+  .subText {
+    font-size: 0.95rem;
+  }
+
+  .shopNowButton {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainHeading {
+    font-size: 1.6rem;
+    line-height: 1.3;
+  }
+}

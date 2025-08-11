@@ -1,0 +1,151 @@
+.shopByNeedContainer {
+  width: 100%;
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.sectionTitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--title-color, #355E3B) !important;
+  margin: 0 0 40px 0;
+  letter-spacing: 1px;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 50px;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.categoryWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  
+}
+
+.categoryCard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  cursor: pointer;
+    border-radius: 6px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.categoryCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.imageContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.categoryImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.categoryCard:hover .categoryImage {
+  transform: scale(1.05);
+}
+
+.categoryTitle {
+  text-align: center;
+  padding: 0;
+}
+
+.categoryTitle h3 {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #355E3B;
+  text-align: center;
+}
+
+/* Specific styling for each category card */
+.toysCard {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+}
+
+.homeEssentialsCard {
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
+}
+
+.giftArticlesCard {
+  background: linear-gradient(135deg, #fd79a8, #e84393);
+}
+
+.toddlerClothingCard {
+  background: linear-gradient(135deg, #55a3ff, #3742fa);
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+  .categoriesGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .shopByNeedContainer {
+    padding: 30px 15px;
+  }
+
+  .categoriesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .categoryTitle h3 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .shopByNeedContainer {
+    padding: 20px 10px;
+  }
+
+  .categoriesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .sectionTitle {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+  }
+
+  .categoryTitle h3 {
+    font-size: 12px;
+  }
+}

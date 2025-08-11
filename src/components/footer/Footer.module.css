@@ -1,0 +1,264 @@
+.mainContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: #355E3B;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.links{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 40px 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-sizing: border-box;
+}
+
+.eachLink{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.inputBox{
+  outline: none;
+  border:none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: white;
+  padding: 10px 12px;
+  width: 250px;
+  min-width: 200px;
+  border-radius: 3px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.inputBox::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.inputBox:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.form{
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+
+.button{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  align-self: flex-end;
+  letter-spacing: 0.5px;
+}
+
+
+
+.copyRight{
+  padding: 20px 60px;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.copyRight p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+.linkGroup1 h1{
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.linkGroup1 p {
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.socialLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.socialItem {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.linkGroup2 p, .linkGroup3 p, .linkGroup4 p{
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.linkGroup2 h2, .linkGroup3 h2{
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    cursor: pointer;
+    padding: 2px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    padding: 30px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 25px 20px;
+  }
+
+  .copyRight {
+    padding: 15px 20px;
+  }
+
+  .inputBox {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .form {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .button {
+    align-self: flex-start;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .links {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px 15px;
+  }
+
+  .eachLink {
+    gap: 12px;
+  }
+
+  .linkGroup1 h1 {
+    font-size: 16px;
+  }
+
+  .linkGroup2 p, .linkGroup3 p, .linkGroup4 p {
+    font-size: 16px;
+  }
+
+  .socialItem, .linkGroup2 h2, .linkGroup3 h2 {
+    font-size: 13px;
+  }
+
+  .inputBox {
+    padding: 8px 10px;
+    font-size: 13px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .button {
+    padding: 6px 12px;
+    font-size: 12px;
+    align-self: flex-start;
+  }
+
+  .form {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .copyRight {
+    padding: 12px 15px;
+  }
+
+  .copyRight p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .links {
+    padding: 15px 10px;
+  }
+
+  .eachLink {
+    gap: 10px;
+  }
+
+  .linkGroup1 h1 {
+    font-size: 15px;
+  }
+
+  .linkGroup2 p, .linkGroup3 p, .linkGroup4 p {
+    font-size: 15px;
+  }
+
+  .socialItem, .linkGroup2 h2, .linkGroup3 h2 {
+    font-size: 12px;
+  }
+
+  .inputBox {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .button {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .copyRight {
+    padding: 10px;
+  }
+
+  .copyRight p {
+    font-size: 12px;
+  }
+}
