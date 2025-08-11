@@ -126,7 +126,7 @@ export const MainManoGrp = () => {
           ]}
         />
 
-                <ShopNowCon_1
+          <ShopNowCon_1
           mainTitle="Experience in pilot's"
           subTitle="Point of view, by grabbing this"
           highlightTitle="Fantastic plane."

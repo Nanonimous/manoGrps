@@ -29,7 +29,7 @@ export const WhyChoseUs = ({
       description: "Premium quality guaranteed products"
     }
   ],
-  backgroundColor = "#f8f9fa",
+  backgroundColor = "w",
   titleColor = "#333333",
   featureTitleColor = "#333333",
   featureDescColor = "#666666"

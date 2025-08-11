@@ -96,7 +96,7 @@
   
   .contentSection {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 20px;
   }
   
   .imageContainer {
@@ -115,9 +115,13 @@
   .aboutUsContainer {
     padding: 30px 15px;
   }
-  
+
   .aboutUsTitle {
     font-size: 1.8rem;
+  }
+
+  .contentSection {
+    gap: 15px;
   }
   
   .imageContainer {
@@ -127,5 +131,23 @@
   .description {
     font-size: 12px;
     line-height: 1.6;
+  }
+}
+
+@media (max-width: 360px) {
+  .aboutUsContainer {
+    padding: 20px 10px;
+  }
+
+  .contentSection {
+    gap: 10px;
+  }
+
+  .aboutUsTitle {
+    margin-bottom: 15px;
+  }
+
+  .imageContainer {
+    height: 180px;
   }
 }

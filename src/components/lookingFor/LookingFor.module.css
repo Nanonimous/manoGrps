@@ -295,7 +295,7 @@
 }
 
 .toyTrainCard {
-  background: transparent;
+  background: rgba(254, 249, 196, 1);
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;

@@ -13,7 +13,7 @@ import Trendings from "../components/trendings/Trendings.jsx";
 import { About_us } from "../components/About_us/About_us";
 import { TrendingHighlight } from "../components/trendingHighlight/TrendingHighlight";
 
-export const Liltots = () => {
+export const Wowla = () => {
   return (
     <div style={{
       minHeight: '100vh',
@@ -31,13 +31,14 @@ export const Liltots = () => {
           { name: "Contact us", href: "#contact" }
         ]}
         categoryLinks={[
-          { name: "New Born", href: "#newborn" },
-          { name: "Infants", href: "#infants" },
-          { name: "Toddler's", href: "#toddlers" },
-          { name: "Party Wear", href: "#party-wear" },
-          { name: "Baby Essentials", href: "#baby-essentials" }
+          { name: "Home Applications  ", href: "#newborn" },
+          { name: "Toys", href: "#infants" },
+          { name: "Return Gift's", href: "#toddlers" },
+          { name: "Wallpaper's", href: "#party-wear" },
+          { name: "Stationaries", href: "#baby-essentials" },
+          { name: "Artificial Flowers", href: "#baby-essentials" }
         ]}
-        bottomRowBgColor="rgba(188, 80, 144, 1)"
+        bottomRowBgColor="rgba(53, 94, 59, 1)"
         mainNavLinkHoverColor="#FF6B35"
       />
       <div style={{
@@ -50,7 +51,7 @@ export const Liltots = () => {
         <LookingFor
           title="What are you looking for?"
           backgroundColor="#F5FFFA"
-          titleColor="rgba(188, 80, 144, 1)"
+          titleColor="rgba(53, 94, 59, 1)"
         />
 
         <ShopNowCon_1
@@ -69,21 +70,21 @@ export const Liltots = () => {
         <TrendingHighlight
           title="Trending Highlights"
           backgroundColor="#F5FFFA"
-          titleColor="rgba(188, 80, 144, 1)"
+          titleColor="rgba(53, 94, 59, 1)"
         />
 
         <Trendings
           title="Trending & New Arrivals "
           backgroundColor="#F5FFFA"
-          titleColor="rgba(188, 80, 144, 1)"
+          titleColor="rgba(53, 94, 59, 1)"
           buttonColor="#ffffff"
-          buttonBgColor="rgba(188, 80, 144, 1)"
-          buttonHoverBgColor="rgba(150, 60, 120, 1)"
-          cardBackgroundColor="rgba(188, 80, 144, 1)"
+          buttonBgColor="rgba(53, 94, 59, 1)"
+          buttonHoverBgColor="rgba(53, 94, 59, 1)"
+          cardBackgroundColor="rgba(53, 94, 59, 1)"
           cardTitleColor="#ffffff"
           cardCategoryColor="#ffe4e1"
           cardPriceColor="#ffffff"
-          cardButtonColor="#FF69B4"
+          cardButtonColor="rgba(53, 94, 59, 1)"
           cardButtonTextColor="#ffffff"
         />
 
@@ -104,7 +105,7 @@ export const Liltots = () => {
           title="About Us"
           description="At Lil Tots, we understand that every little one deserves the best. Our carefully curated collection of baby and toddler products combines safety, comfort, and style. From organic clothing to educational toys, we provide everything your little angel needs to grow, learn, and play."
           backgroundColor="#F5FFFA"
-          titleColor="black"
+          titleColor="rgba(53, 94, 59, 1)"
           textColor="rgba(80, 80, 80, 1)"
         />
 
@@ -146,31 +147,31 @@ export const Liltots = () => {
           title="Visit Our Baby Store in Pondicherry!"
           storeName="Lil Tots Store"
           backgroundColor="#F5FFFA"
-          titleColor="rgba(188, 80, 144, 1)"
+          titleColor="rgba(53, 94, 59, 1)"
           storeNameColor="white"
           storeLocationColor="white"
           addressColor="white"
           buttonColor="black"
           buttonBgColor="white"
           directionButtonColor="#ffffff"
-          directionButtonBgColor="rgba(150, 60, 120, 1)"
+          directionButtonBgColor="rgba(53, 94, 59, 1)"
         />
 
         <EnquiryForm
           title="Have Questions About Baby Products?"
           backgroundColor="#F5FFFA"
-          formBackgroundColor="rgba(188, 80, 144, 1)"
-          titleColor="rgba(188, 80, 144, 1)"
-          inputBorderColor="rgba(188, 80, 144, 0.3)"
+          formBackgroundColor="rgba(53, 94, 59, 1)"
+          titleColor="rgba(53, 94, 59, 1)"
+          inputBorderColor="rgba(53, 94, 59, 1)"
           inputFocusColor="rgba(188, 80, 144, 1)"
-          buttonColor="rgba(188, 80, 144, 1)"
+          buttonColor="rgba(53, 94, 59, 1)"
           buttonBgColor="white"
           buttonHoverColor="rgba(150, 60, 120, 1)"
         />
 
         <Footer
           companyName="Lil Tots"
-          backgroundColor="rgba(188, 80, 144, 1)"
+          backgroundColor="rgba(53, 94, 59, 1)"
         />
       </div>
     </div>
