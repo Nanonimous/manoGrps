@@ -1,15 +1,23 @@
 .productCardContainer{
     width: 280px;
-    height: 400x;
-    background-color: #355E3B;
+    height: 400px;
+    background-color: #355E3B; /* fallback color */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    position: relative;   /* <--- add this */
+    position: relative;
     overflow: hidden;
     box-sizing: border-box;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.productCardContainer:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .productDetail{

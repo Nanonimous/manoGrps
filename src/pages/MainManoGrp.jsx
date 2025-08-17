@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ShopNowCon_1 } from "../components/shopNowCon_1/ShopNowCon_1.jsx";
 import { ShopByNeed } from "../components/shopByNeed/ShopByNeed.jsx";
 import { ShowCard } from "../components/showCard/ShowCard.jsx";
@@ -18,6 +18,41 @@ import Trendings from "../components/trendings/Trendings";
 
 
 export const MainManoGrp = () => {
+  // Cart state management
+  const [cartItems, setCartItems] = useState([
+    {
+      id: 1,
+      name: "Premium Baby Care Set",
+      price: "$29.99",
+      image: "/api/placeholder/60/60",
+      quantity: 1
+    },
+    {
+      id: 2,
+      name: "Organic Cotton Onesie",
+      price: "$15.99",
+      image: "/api/placeholder/60/60",
+      quantity: 2
+    }
+  ]);
+
+  const handleUpdateQuantity = (id, newQuantity) => {
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const handleRemoveItem = (id) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+  };
+
+  const handleCheckout = (items, total) => {
+    console.log(`Processing checkout for ${items.length} items, total: $${total}`);
+    // Add your checkout logic here
+    alert(`Checkout initiated! Total: $${total}`);
+  };
   return (
     <div style={{
       minHeight: '100vh',
@@ -28,15 +63,18 @@ export const MainManoGrp = () => {
         brandName="Mano Groups"
         backgroundColor="#ffffff "
         navigationLinks={[
-          { href: "#home", text: "Home" },
-          { href: "#mano-stores", text: "Mano Store's" },
-          { href: "#wowla", text: "Wowla" },
-          { href: "#lil-tots", text: "Lil tot's" },
+          { href: "/", text: "Home" },
+          { href: "/manostore", text: "Mano Store's" },
+          { href: "/wowla", text: "Wowla" },
+          { href: "/liltots", text: "Lil tot's" },
           { href: "#contact", text: "Contact us" }
         ]}
-        loginText="Login"
+        cartItems={cartItems}
+        cartBackgroundColor="#4a7c59"
         onCartClick={() => console.log("Cart clicked")}
-        onLoginClick={() => console.log("Login clicked")}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+        onCheckout={handleCheckout}
       />
       <div style={{
         paddingTop: '80px', // Account for fixed navbar height

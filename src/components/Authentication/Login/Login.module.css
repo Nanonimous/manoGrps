@@ -1,0 +1,314 @@
+.loginContainer {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(244, 237, 230, 1) 0%, rgba(53, 94, 59, 0.1) 100%);
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.loginCard {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+}
+
+.loginHeader {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.loginTitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #355E3B;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+.loginSubtitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  color: #666666;
+  margin: 0;
+  font-weight: 400;
+}
+
+.loginContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.googleLoginWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.loginDescription {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.loginDescription p {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #666666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .loginContainer {
+    padding: 15px;
+  }
+
+  .loginCard {
+    padding: 32px 24px;
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  .loginTitle {
+    font-size: 1.8rem;
+  }
+
+  .loginSubtitle {
+    font-size: 0.9rem;
+  }
+
+  .loginDescription p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loginContainer {
+    padding: 20px 10px;
+    min-height: calc(100vh - 140px);
+  }
+
+  .loginCard {
+    padding: 24px 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .loginHeader {
+    margin-bottom: 24px;
+  }
+
+  .loginTitle {
+    font-size: 1.6rem;
+  }
+
+  .loginContent {
+    gap: 20px;
+  }
+
+  .loginDescription p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .loginCard {
+    padding: 20px 16px;
+  }
+
+  .loginTitle {
+    font-size: 1.4rem;
+  }
+
+  .loginSubtitle {
+    font-size: 0.85rem;
+  }
+
+  .loginDescription p {
+    font-size: 11px;
+  }
+}
+
+/* Loading State */
+.loadingMessage {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.loadingMessage p {
+  color: #007bff;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Session Styles */
+.sessionHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.sessionTitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #355E3B;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.5px;
+}
+
+.sessionSubtitle {
+  font-family: "Poppins", sans-serif;
+  color: #28a745;
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.sessionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.userAvatar {
+  flex-shrink: 0;
+}
+
+.avatarImage {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #355E3B;
+}
+
+.userDetails {
+  flex: 1;
+}
+
+.userName {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.25rem 0;
+}
+
+.userEmail {
+  font-family: "Poppins", sans-serif;
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.loginTime {
+  font-family: "Poppins", sans-serif;
+  color: #888;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.sessionActions {
+  text-align: center;
+}
+
+.logoutButton {
+  font-family: "Poppins", sans-serif;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+  background-color: #c82333;
+}
+
+.tokenInfo {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.tokenLabel {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tokenValue {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: #355E3B;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  word-break: break-all;
+  margin: 0 0 0.5rem 0;
+}
+
+.cookieInfo {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.7rem;
+  color: #666;
+  font-style: italic;
+  margin: 0;
+  text-align: center;
+}
+
+/* Test Section */
+.testSection {
+  text-align: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.testButton {
+  font-family: "Poppins", sans-serif;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.testButton:hover {
+  background-color: #5a6268;
+}

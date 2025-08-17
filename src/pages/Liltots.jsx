@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { ShopNowCon_1 } from "../components/shopNowCon_1/ShopNowCon_1.jsx";
 import { ShopByNeed } from "../components/shopByNeed/ShopByNeed.jsx";
 import { WhyChoseUs } from "../components/whyChoseUs/WhyChoseUs.jsx";
@@ -12,8 +13,15 @@ import { LookingFor } from "../components/lookingFor/LookingFor";
 import Trendings from "../components/trendings/Trendings.jsx";
 import { About_us } from "../components/About_us/About_us";
 import { TrendingHighlight } from "../components/trendingHighlight/TrendingHighlight";
+import ProductMain from "../components/product_main";
+import ShowProduct from "../components/showproduct";
+import {ProductPage} from "../components/product_page/ProductPage.jsx";
 
 export const Liltots = () => {
+  const location = useLocation();
+  const isProductPage = location.pathname.includes('/liltots/products');
+  console.log(isProductPage);
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -25,10 +33,10 @@ export const Liltots = () => {
         tagline="LITTLE LOOKS BIG LOVE"
         brandColor="#FF6B35"
         mainNavLinks={[
-          { name: "Home", href: "#home" },
-          { name: "Products", href: "#products" },
-          { name: "About Us", href: "#about" },
-          { name: "Contact us", href: "#contact" }
+          { name: "Home", href: "/liltots" },
+          { name: "Products", href: "/liltots/products" },
+          { name: "About Us", href: "/liltots/about" },
+          { name: "Contact us", href: "/liltots/contact" }
         ]}
         categoryLinks={[
           { name: "New Born", href: "#newborn" },
@@ -45,7 +53,100 @@ export const Liltots = () => {
         width: '100%',
         backgroundColor: '#F5FFFA'
       }}>
-        <MainDisplay/>
+        {isProductPage ? (
+          // Product page components
+          <>
+            <ProductMain
+              categoryName="Lil' Tots Products"
+              breadcrumbHome="Home"
+              breadcrumbCurrent="Products"
+              backgroundImage="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+              backgroundColor="#F5FFFA"
+              titleColor="#ffffff"
+              breadcrumbColor="#ffffff"
+              onHomeClick={() => window.location.href = '/liltots'}
+            />
+
+
+            <ShowProduct
+              title="Our Baby Products"
+              products={[
+                {
+                  id: 1,
+                  name: "Baby Onesie",
+                  category: "New Born",
+                  price: "$19.99",
+                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(188, 80, 144, 1)"
+                },
+                {
+                  id: 2,
+                  name: "Soft Blanket",
+                  category: "Baby Essentials",
+                  price: "$29.99",
+                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(188, 80, 144, 1)"
+                },
+                {
+                  id: 3,
+                  name: "Toddler Dress",
+                  category: "Toddler's",
+                  price: "$35.99",
+                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(188, 80, 144, 1)"
+                },
+                {
+                  id: 4,
+                  name: "Party Outfit",
+                  category: "Party Wear",
+                  price: "$45.99",
+                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(188, 80, 144, 1)"
+                },
+                {
+                  id: 5,
+                  name: "Baby Shoes",
+                  category: "Infants",
+                  price: "$24.99",
+                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(188, 80, 144, 1)"
+                },
+                {
+                  id: 6,
+                  name: "Feeding Bottle",
+                  category: "Baby Essentials",
+                  price: "$15.99",
+                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(188, 80, 144, 1)"
+                },
+                {
+                  id: 7,
+                  name: "Baby Hat",
+                  category: "New Born",
+                  price: "$12.99",
+                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(188, 80, 144, 1)"
+                },
+                {
+                  id: 8,
+                  name: "Toddler Toy",
+                  category: "Toddler's",
+                  price: "$22.99",
+                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(188, 80, 144, 1)"
+                }
+              ]}
+              backgroundColor="#F5FFFA"
+              titleColor="rgba(188, 80, 144, 1)"
+              cardTextColor="#ffffff"
+              onProductClick={(product) => console.log('Product clicked:', product)}
+              onLoadMore={() => console.log('Load more products')}
+            />
+          </>
+        ) : (
+          // Home page components
+          <>
+            <MainDisplay/>
 
         <LookingFor
           title="What are you looking for?"
@@ -167,6 +268,13 @@ export const Liltots = () => {
           buttonBgColor="white"
           buttonHoverColor="rgba(150, 60, 120, 1)"
         />
+
+            <Footer
+              companyName="Lil Tots"
+              backgroundColor="rgba(188, 80, 144, 1)"
+            />
+          </>
+        )}
 
         <Footer
           companyName="Lil Tots"

@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Navbar_2.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import Cart from "../cart/Cart";
+import { useCart } from "../../context/CartContext";
 
 export default function Navbar_2({
   // Main navigation links
@@ -23,59 +26,75 @@ export default function Navbar_2({
   brandColor = "#FF6B35",
   // Colors
   topRowBgColor = "#ffffff",
-  bottomRowBgColor = null, // If null, uses automatic color detection
+  bottomRowBgColor = null,
   mainNavLinkColor = "#333",
   mainNavLinkHoverColor = "#FF6B35",
   categoryLinkColor = "white",
   // Logo/Icon colors
   logoColor = "#F4A460",
   cartIconColor = "#666",
-  userIconColor = "#666"
+  userIconColor = "#666",
+  // Cart props
+  cartBackgroundColor = "#4a7c59",
+  onCartClick = () => console.log("Cart clicked"),
 }) {
+  const { cartItems, updateQuantity, removeItem } = useCart();
+  const navigate = useNavigate();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const handleCartClick = () => {
+    setIsCartOpen(true);
+    onCartClick();
+  };
+
+  const handleCloseCart = () => {
+    setIsCartOpen(false);
+  };
+
+  const handleLoginClick = () => {
+    navigate("/authentication");
+  };
+
+  const handleCheckout = (items, total) => {
+    console.log(`Checkout with ${items.length} items, total: ${total}`);
+  };
 
   // Function to determine color based on category content
   const getBottomNavColor = () => {
-    // If a specific color is provided, use it
     if (bottomRowBgColor) {
       return bottomRowBgColor;
     }
 
     const categoryNames = categoryLinks.map(link => link.name.toLowerCase()).join(' ');
 
-    // Baby/Kids related categories
     if (categoryNames.includes('baby') || categoryNames.includes('infant') ||
         categoryNames.includes('toddler') || categoryNames.includes('newborn') ||
         categoryNames.includes('kids') || categoryNames.includes('children')) {
       return "rgba(188, 80, 144, 1)";
     }
 
-    // Electronics categories
     if (categoryNames.includes('electronic') || categoryNames.includes('gadget') ||
         categoryNames.includes('phone') || categoryNames.includes('computer') ||
         categoryNames.includes('tech')) {
       return "linear-gradient(135deg, #4A90E2 0%, #5BA0F2 50%, #6CB0FF 100%)";
     }
 
-    // Fashion/Clothing categories
     if (categoryNames.includes('fashion') || categoryNames.includes('clothing') ||
         categoryNames.includes('apparel') || categoryNames.includes('wear') ||
         categoryNames.includes('dress')) {
       return "linear-gradient(135deg, #E74C3C 0%, #EC7063 50%, #F1948A 100%)";
     }
 
-    // Home/Garden categories
     if (categoryNames.includes('home') || categoryNames.includes('garden') ||
         categoryNames.includes('furniture') || categoryNames.includes('decor')) {
       return "linear-gradient(135deg, #27AE60 0%, #58D68D 50%, #82E0AA 100%)";
     }
 
-    // Sports/Fitness categories
     if (categoryNames.includes('sport') || categoryNames.includes('fitness') ||
         categoryNames.includes('gym') || categoryNames.includes('outdoor')) {
       return "linear-gradient(135deg, #E67E22 0%, #F39C12 50%, #F8C471 100%)";
     }
 
-    // Default color for unmatched categories
     return "linear-gradient(135deg, #9B59B6 0%, #BB8FCE 50%, #D7BDE2 100%)";
   };
   return (
@@ -136,12 +155,12 @@ export default function Navbar_2({
 
           {/* Right Section - Cart and Login */}
           <div className={styles.rightSection}>
-            <div className={styles.cartIcon} style={{ color: cartIconColor }}>
+            <div className={styles.cartIcon} style={{ color: cartIconColor }} onClick={handleCartClick}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 16.1 19 15 19H9C7.9 19 7 18.1 7 17V13M17 13H7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <div className={styles.loginSection}>
+            <div className={styles.loginSection} onClick={handleLoginClick}>
               <div className={styles.userIcon} style={{ color: userIconColor }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -174,6 +193,17 @@ export default function Navbar_2({
           </div>
         </div>
       </div>
+
+      {/* Cart Slider */}
+      <Cart
+        isOpen={isCartOpen}
+        onClose={handleCloseCart}
+        cartItems={cartItems}
+        backgroundColor={cartBackgroundColor}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeItem}
+        onCheckout={handleCheckout}
+      />
     </nav>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { ShopNowCon_1 } from "../components/shopNowCon_1/ShopNowCon_1.jsx";
 import { ShopByNeed } from "../components/shopByNeed/ShopByNeed.jsx";
 import { WhyChoseUs } from "../components/whyChoseUs/WhyChoseUs.jsx";
@@ -11,9 +12,16 @@ import MainDisplay from "../components/maindisplay/MainDisplay.jsx";
 import { LookingFor } from "../components/lookingFor/LookingFor.jsx";
 import Trendings from "../components/trendings/Trendings.jsx";
 import { About_us } from "../components/About_us/About_us.jsx";
+import ProductMain from "../components/product_main";
+import ShowProduct from "../components/showproduct";
+import {ProductPage} from "../components/product_page/ProductPage.jsx";
 
 
 export const ManoStore = () => {
+  const location = useLocation();
+  const isProductPage = location.pathname.includes('/manostore/products');
+  console.log(isProductPage);
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -25,10 +33,10 @@ export const ManoStore = () => {
         tagline="LITTLE LOOKS BIG LOVE"
         brandColor="#FF6B35"
         mainNavLinks={[
-          { name: "Home", href: "#home" },
-          { name: "Products", href: "#products" },
-          { name: "About Us", href: "#about" },
-          { name: "Contact us", href: "#contact" }
+          { name: "Home", href: "/manostore" },
+          { name: "Products", href: "/manostore/products" },
+          { name: "About Us", href: "/manostore/about" },
+          { name: "Contact us", href: "/womanostorewla/contact" }
         ]}
         categoryLinks={[
           { name: "Home Appliances", href: "#newborn" },
@@ -46,7 +54,100 @@ export const ManoStore = () => {
         width: '100%',
         backgroundColor: '#F5FFFA'
       }}>
-        <MainDisplay/>
+        {isProductPage ? (
+          // Product page components
+          <>
+            <ProductMain
+              categoryName="Mano Store Products"
+              breadcrumbHome="Home"
+              breadcrumbCurrent="Products"
+              backgroundImage="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+              backgroundColor="#F5FFFA"
+              titleColor="#ffffff"
+              breadcrumbColor="#ffffff"
+              onHomeClick={() => window.location.href = '/manostore'}
+            />
+
+
+            <ShowProduct
+              title="Our Home Products"
+              products={[
+                {
+                  id: 1,
+                  name: "Kitchen Appliance",
+                  category: "Home Appliances",
+                  price: "$199.99",
+                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(3, 4, 94, 1)"
+                },
+                {
+                  id: 2,
+                  name: "Educational Toy",
+                  category: "Toys",
+                  price: "$29.99",
+                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(3, 4, 94, 1)"
+                },
+                {
+                  id: 3,
+                  name: "Persian Carpet",
+                  category: "Carpets",
+                  price: "$299.99",
+                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(3, 4, 94, 1)"
+                },
+                {
+                  id: 4,
+                  name: "Wall Art",
+                  category: "Wallpaper's",
+                  price: "$45.99",
+                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(3, 4, 94, 1)"
+                },
+                {
+                  id: 5,
+                  name: "Gift Box Set",
+                  category: "Return Gift's",
+                  price: "$24.99",
+                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(3, 4, 94, 1)"
+                },
+                {
+                  id: 6,
+                  name: "Notebook Set",
+                  category: "Stationaries",
+                  price: "$15.99",
+                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(3, 4, 94, 1)"
+                },
+                {
+                  id: 7,
+                  name: "Decorative Item",
+                  category: "Home Appliances",
+                  price: "$89.99",
+                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(3, 4, 94, 1)"
+                },
+                {
+                  id: 8,
+                  name: "Premium Pen Set",
+                  category: "Stationaries",
+                  price: "$32.99",
+                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+                  backgroundColor: "rgba(3, 4, 94, 1)"
+                }
+              ]}
+              backgroundColor="#F5FFFA"
+              titleColor="rgba(3, 4, 94, 1)"
+              cardTextColor="#ffffff"
+              onProductClick={(product) => console.log('Product clicked:', product)}
+              onLoadMore={() => console.log('Load more products')}
+            />
+          </>
+        ) : (
+          // Home page components
+          <>
+            <MainDisplay/>
 
         <LookingFor
           title="What's perfect for your little one?"
@@ -169,8 +270,15 @@ export const ManoStore = () => {
           buttonHoverColor="rgba(3, 4, 94, 1)"
         />
 
+            <Footer
+              companyName="Mano Store"
+              backgroundColor="rgba(3, 4, 94, 1)"
+            />
+          </>
+        )}
+
         <Footer
-          companyName="Lil Tots"
+          companyName="Mano Store"
           backgroundColor="rgba(3, 4, 94, 1)"
         />
       </div>
