@@ -28,7 +28,7 @@ export function Login() {
       console.log("Google User:", decoded);
 
       const response = await axios.post("https://userenquire.onrender.com/api/auth/login", {
-        email: decoded.email,
+        userEmail: decoded.email,
         userName: decoded.name,
         userPictureUrl: decoded.picture
       }, {
@@ -42,7 +42,7 @@ export function Login() {
       // Handle JWT token response - just set the cookie
       if (response.data) {
         console.log("JWT Token received:", response.data);
-
+        
         // Set JWT token in cookie
         setCookie('authToken', response.data, 7); // 7 days expiry
 

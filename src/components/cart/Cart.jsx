@@ -1,14 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef ,useState} from "react";
 import styles from "./Cart.module.css";
+import axios from "axios";
 
 export default function Cart({
   isOpen = false,
   onClose = () => {},
-  cartItems = [],
   backgroundColor = "#4a7c59",
-  onUpdateQuantity = () => {},
-  onRemoveItem = () => {},
   onCheckout = () => {},
+  shopName,
   currency = "$",
   showEmptyCartMessage = true,
   emptyCartMessage = "Your cart is empty",
@@ -22,23 +21,42 @@ export default function Cart({
   persistenceKey = "cart_items",
   showConfirmRemove = true,
   titleColor = "#ffffff",
-  textColor = "#ffffff"
+  textColor = "#ffffff",
+  cartItemsSent,
+  onUpdateQuantity,
+  onRemoveItem
 }) {
+
+  console.log("cart items in cart component", cartItemsSent);
   const cartRef = useRef(null);
   const firstFocusableRef = useRef(null);
+  const [cartItems, setCartItems] = useState(
+  Array.isArray(cartItemsSent) ? cartItemsSent : []
+);
 
-  // Validate cart item structure
-  const isValidCartItem = (item) => {
-    return item &&
-           typeof item.id !== 'undefined' &&
-           item.name &&
-           item.price &&
-           typeof item.quantity === 'number' &&
-           item.quantity > 0;
+
+
+useEffect(() => {
+  setCartItems(Array.isArray(cartItemsSent) ? cartItemsSent : []);
+}, [cartItemsSent]);
+
+  // 🔥 Normalize + validate cart items
+  const normalizeCartItem = (item) => {
+    if (!item || !item.cartId || !item.productName || !item.productPrice || !item.quantity) {
+      return null;
+    }
+    return {
+      id: item.cartId, // use cartId as unique id
+      name: item.productName,
+      price: item.productPrice,
+      quantity: item.quantity,
+      imageId: item.productImageId?.[0] || null,
+    };
   };
 
-  // Filter out invalid cart items
-  const validCartItems = cartItems.filter(isValidCartItem);
+  const validCartItems = (cartItems || [])
+    .map(normalizeCartItem)
+    .filter(Boolean);
 
   // Enhanced functionality
   useEffect(() => {
@@ -79,7 +97,7 @@ export default function Cart({
 
   const calculateTotal = () => {
     return validCartItems.reduce((total, item) => {
-      const price = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
+      const price = parseFloat(item.price) || 0;
       return total + (price * item.quantity);
     }, 0).toFixed(2);
   };
@@ -95,8 +113,8 @@ export default function Cart({
 
   const handleRemoveItem = (id) => {
     if (showConfirmRemove) {
-      const item = cartItems.find(item => item.id === id);
-      if (item && window.confirm(`Remove "${item.name}" from cart?`)) {
+      const item = cartItems.find(item => item.cartId === id);
+      if (item && window.confirm(`Remove "${item.productName}" from cart?`)) {
         onRemoveItem(id);
       }
     } else {
@@ -224,15 +242,10 @@ export default function Cart({
                 style={{ animationDelay: showItemAnimation ? `${index * 0.1}s` : '0s' }}
               >
                 <div className={styles.itemImage}>
-                  <img
-                    src={item.image || '/api/placeholder/60/60'}
-                    alt={`${item.name} product image`}
-                    loading="lazy"
-                    onError={(e) => {
-                      if (e.target.src !== '/api/placeholder/60/60') {
-                        e.target.src = '/api/placeholder/60/60';
-                      }
-                    }}
+            <img 
+                    src={`https://lh3.googleusercontent.com/d/${item.imageId}=w1000-h1000-rw`} 
+                    alt={item.name}
+                    // className={styles.mainImage}
                   />
                 </div>
                 <div className={styles.itemDetails}>

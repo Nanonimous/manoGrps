@@ -6,6 +6,7 @@ export const ProductCard_1 = ({
   title,
   cat,
   price,
+  productId,
   cardBackgroundColor = "linear-gradient(135deg, #e91e63 0%, #c2185b 100%)",
   titleColor = "#ffffff",
   categoryColor = "#e1e1e1b6",
@@ -18,7 +19,7 @@ export const ProductCard_1 = ({
       className={pc.productCardContainer}
       style={{ background: cardBackgroundColor }}
     >
-      <img src={image} className={pc.imgContainer} alt={title} />
+      <img src={`https://lh3.googleusercontent.com/d/${image}=w1000-h1000-rw`} className={pc.imgContainer} alt={title} />
       <div className={pc.productDetail}>
         <div className={pc.leftProDetail}>
           <p className={pc.title} style={{ color: titleColor }}>{title}</p>

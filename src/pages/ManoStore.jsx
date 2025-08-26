@@ -19,9 +19,10 @@ import {ProductPage} from "../components/product_page/ProductPage.jsx";
 
 export const ManoStore = () => {
   const location = useLocation();
-  const isProductPage = location.pathname.includes('/manostore/products');
+  const isProductPage = location.pathname.includes('/manostore/products/all');
   console.log(isProductPage);
-
+  const cat = location.pathname.split("/")[3] || "all";
+  console.log(cat);
   return (
     <div style={{
       minHeight: '100vh',
@@ -34,17 +35,17 @@ export const ManoStore = () => {
         brandColor="#FF6B35"
         mainNavLinks={[
           { name: "Home", href: "/manostore" },
-          { name: "Products", href: "/manostore/products" },
+          { name: "Products", href: "/manostore/products/all" },
           { name: "About Us", href: "/manostore/about" },
           { name: "Contact us", href: "/womanostorewla/contact" }
         ]}
         categoryLinks={[
-          { name: "Home Appliances", href: "#newborn" },
-          { name: "Toys", href: "#infants" },
-          { name: "Return Gift's", href: "#toddlers" },
-          { name: "Carpets", href: "#party-wear" },
-          { name: "Wallpaper's", href: "#baby-essentials" },
-          { name: "Stationaries", href: "#baby-essentials" }
+          { name: "Home Appliances", href: "/manostore/products/Home Appliances" },
+          { name: "Toys", href: "/manostore/products/Toys" },
+          { name: "Return Gift's", href: "/manostore/products/Return Gift" },
+          { name: "Carpets", href: "/manostore/products/Carpets" },
+          { name: "Wallpaper's", href: "/manostore/products/Wallpaper" },
+          { name: "Stationaries", href: "manostore/products/Stationaries" }
         ]}
         bottomRowBgColor="rgba(3, 4, 94, 1)"
         mainNavLinkHoverColor="#FF6B35"
@@ -71,77 +72,11 @@ export const ManoStore = () => {
 
             <ShowProduct
               title="Our Home Products"
-              products={[
-                {
-                  id: 1,
-                  name: "Kitchen Appliance",
-                  category: "Home Appliances",
-                  price: "$199.99",
-                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(3, 4, 94, 1)"
-                },
-                {
-                  id: 2,
-                  name: "Educational Toy",
-                  category: "Toys",
-                  price: "$29.99",
-                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(3, 4, 94, 1)"
-                },
-                {
-                  id: 3,
-                  name: "Persian Carpet",
-                  category: "Carpets",
-                  price: "$299.99",
-                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(3, 4, 94, 1)"
-                },
-                {
-                  id: 4,
-                  name: "Wall Art",
-                  category: "Wallpaper's",
-                  price: "$45.99",
-                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(3, 4, 94, 1)"
-                },
-                {
-                  id: 5,
-                  name: "Gift Box Set",
-                  category: "Return Gift's",
-                  price: "$24.99",
-                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(3, 4, 94, 1)"
-                },
-                {
-                  id: 6,
-                  name: "Notebook Set",
-                  category: "Stationaries",
-                  price: "$15.99",
-                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(3, 4, 94, 1)"
-                },
-                {
-                  id: 7,
-                  name: "Decorative Item",
-                  category: "Home Appliances",
-                  price: "$89.99",
-                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(3, 4, 94, 1)"
-                },
-                {
-                  id: 8,
-                  name: "Premium Pen Set",
-                  category: "Stationaries",
-                  price: "$32.99",
-                  image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(3, 4, 94, 1)"
-                }
-              ]}
+              shopName = "Mano Store" 
+              categoryName = {cat || "all"}
               backgroundColor="#F5FFFA"
               titleColor="rgba(3, 4, 94, 1)"
               cardTextColor="#ffffff"
-              onProductClick={(product) => console.log('Product clicked:', product)}
-              onLoadMore={() => console.log('Load more products')}
             />
           </>
         ) : (

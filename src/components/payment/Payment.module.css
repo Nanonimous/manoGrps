@@ -1,28 +1,209 @@
 .paymentContainer {
     display: flex;
-    flex-direction: column;
-    padding: 20px;
-    background-color: #f9f9f9;
+    justify-content: space-between;
+    padding: 40px 60px;
+    background-color: #f9f6f1;
+    color: #1a1a1a;
+    gap: 200px;
+}
+
+/* Left Column */
+.leftSection {
+    flex: 2;
+}
+
+.title{
+    background-color:#F9F6F1;
+    color:rgba(53, 94, 59, 1);
+    font-size: 35px;
+    display:flex;
+    font-weight: 500;
+    justify-content: center;
+    padding: 10px;
 }
 
 .contactSection, .deliverySection, .paymentSection {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
+.contactSection h2,
+.deliverySection h2,
+.paymentSection h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #1a1a1a;
+}
+
+/* Inputs */
 input, textarea {
     width: 100%;
-    padding: 10px;
-    margin: 5px 0;
+    padding: 12px 14px;
+    margin: 8px 0;
+    border: 1px solid #1a4d2e;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #fff;
+    outline: none;
+    color: #000;
+    caret-color: #000;
 }
 
-button {
+input:focus, textarea:focus {
+    border-color: #2e6b40;
+    box-shadow: 0 0 3px rgba(46,107,64,0.4);
+}
+
+textarea {
+    min-height: 80px;
+    resize: none;
+}
+
+/* Row inputs */
+.row {
+    display: flex;
+    gap: 12px;
+}
+
+.row input {
+    flex: 1;
+}
+
+/* Right Column */
+.rightSection {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    height: fit-content;
+}
+
+/* Product Item */
+.productItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
     padding: 10px;
-    background-color: #4CAF50;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+.productItem img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.productDetails {
+    flex: 1;
+}
+
+.quantityControl {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.deleteBtn {
+    background: transparent;
+    border: none;
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-self: flex-start;
+}
+
+.deleteBtn:hover {
+    color: darkred;
+}
+
+
+.quantityControl button {
+    padding: 5px 10px;
+    border: 1px solid #1a4d2e;
+    border-radius: 5px;
+    background: none;
+    cursor: pointer;
+    color:black;
+}
+
+.summary {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+/* Pay Button */
+button.payNow {
+    width: 100%;
+    padding: 14px;
+    background-color: #1a4d2e;
     color: white;
     border: none;
+    border-radius: 6px;
     cursor: pointer;
+    margin-top: 15px;
+    font-size: 16px;
 }
 
-button:hover {
-    background-color: #45a049;
+button.payNow:hover {
+    background-color: #163d25;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 1024px) {
+    .paymentContainer {
+        padding: 30px;
+        gap: 30px;
+    }
+}
+@media (max-width: 768px) {
+    .paymentContainer {
+        flex-direction: column;   /* stack vertically */
+        padding: 20px;
+    }
+
+    /* Put product summary first */
+    .rightSection {
+        order: -1;     /* move to top */
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .leftSection {
+        width: 100%;
+    }
+
+    .row {
+        flex-direction: column;  /* stack inputs vertically */
+    }
+}
+
+@media (max-width: 480px) {
+    .paymentContainer {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    input, textarea {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    button.payNow {
+        font-size: 14px;
+        padding: 12px;
+    }
 }

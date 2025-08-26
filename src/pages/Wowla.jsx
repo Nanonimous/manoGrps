@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ShopNowCon_1 } from "../components/shopNowCon_1/ShopNowCon_1.jsx";
 import { ShopByNeed } from "../components/shopByNeed/ShopByNeed.jsx";
@@ -19,8 +19,10 @@ import {ProductPage} from "../components/product_page/ProductPage.jsx";
 
 export const Wowla = () => {
   const location = useLocation();
+  const cat = location.pathname.split("/")[3] || "all";
+  
+  console.log(cat);
   const isProductPage = location.pathname.includes('/wowla/products');
-  console.log(isProductPage);
 
   return (
     <div style={{
@@ -34,23 +36,23 @@ export const Wowla = () => {
         brandColor="#FF6B35"
         mainNavLinks={[
           { name: "Home", href: "/wowla" },
-          { name: "Products", href: "/wowla/products" },
+          { name: "Products", href: "/wowla/products/all" },
           { name: "About Us", href: "/wowla/about" },
           { name: "Contact us", href: "/wowla/contact" }
         ]}
         categoryLinks={[
-          { name: "Home Applications", href: "#home-applications" },
-          { name: "Toys", href: "#toys" },
-          { name: "Return Gift's", href: "#return-gifts" },
-          { name: "Wallpaper's", href: "#wallpapers" },
-          { name: "Stationaries", href: "#stationaries" },
-          { name: "Artificial Flowers", href: "#artificial-flowers" }
+          { name: "Home Applications", href: "/wowla/products/home applications" },
+          { name: "Toys", href: "/wowla/products/toys" },
+          { name: "Return Gift's", href: "/wowla/products/return gifts" },
+          { name: "Wallpaper's", href: "/wowla/products/wallpapers" },
+          { name: "Stationaries", href: "/wowla/products/stationaries" },
+          { name: "Artificial Flowers", href: "/wowla/products/artificial flowers" }
         ]}
         bottomRowBgColor="rgba(53, 94, 59, 1)"
         mainNavLinkHoverColor="#FF6B35"
       />
       <div style={{
-        paddingTop: '120px', // Account for fixed navbar height (Navbar_2 is taller)
+        paddingTop: '120px',
         width: '100%',
         backgroundColor: '#F5FFFA'
       }}>
@@ -70,81 +72,15 @@ export const Wowla = () => {
 
             <ShowProduct
               title="Our Products"
-              products={[
-                {
-                  id: 1,
-                  name: "Cute Pink Toy",
-                  category: "Toys",
-                  price: "$29.99",
-                  image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "#355E3B"
-                },
-                {
-                  id: 2,
-                  name: "Green Helicopter",
-                  category: "Toys",
-                  price: "$45.99",
-                  image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "#355E3B"
-                },
-                {
-                  id: 3,
-                  name: "Blue Racing Car",
-                  category: "Toys",
-                  price: "$35.99",
-                  image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "#355E3B"
-                },
-                {
-                  id: 4,
-                  name: "Pink Unicorn",
-                  category: "Toys",
-                  price: "$39.99",
-                  image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "#355E3B"
-                },
-                {
-                  id: 5,
-                  name: "Yellow Car Model",
-                  category: "Toys",
-                  price: "$24.99",
-                  image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "#355E3B"
-                },
-                {
-                  id: 6,
-                  name: "Minion Figure",
-                  category: "Collectibles",
-                  price: "$19.99",
-                  image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "#355E3B"
-                },
-                {
-                  id: 7,
-                  name: "Toy Airplane",
-                  category: "Toys",
-                  price: "$42.99",
-                  image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "#355E3B"
-                },
-                {
-                  id: 8,
-                  name: "Teddy Bear",
-                  category: "Plush Toys",
-                  price: "$32.99",
-                  image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "#355E3B"
-                }
-              ]}
+              shopName="Wowla"
+              categoryName={cat || "all"}
               backgroundColor="#F5FFFA"
               titleColor="rgba(53, 94, 59, 1)"
               cardTextColor="#ffffff"
-              onProductClick={(product) => console.log('Product clicked:', product)}
-              onLoadMore={() => console.log('Load more products')}
+
             />
           </>
         ) : (
-          // Home page components
           <>
             <MainDisplay/>
 
@@ -279,11 +215,3 @@ export const Wowla = () => {
     </div>
   );
 };
-
-
-
-
-
-
-
-

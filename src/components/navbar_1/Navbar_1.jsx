@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./Navbar_1.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import Cart from "../cart/Cart";
-import { useCart } from "../../context/CartContext";
 
 export default function Navbar_1({
   brandName = "Mano Groups",
@@ -16,9 +15,11 @@ export default function Navbar_1({
   backgroundColor = "#ffffff",
   cartBackgroundColor = "#4a7c59",
   onCartClick = () => console.log("Cart clicked"),
+  onUpdateQuantity = () => console.log("Update quantity"),
+  onRemoveItem = () => console.log("Remove item"),
+  onCheckout = () => console.log("Checkout"),
 }) {
   const navigate = useNavigate();
-  const { cartItems, updateQuantity, removeItem } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleCartClick = () => {
@@ -137,12 +138,12 @@ export default function Navbar_1({
       {/* Cart Slider */}
       <Cart
         isOpen={isCartOpen}
+        shopName={brandName}
         onClose={handleCloseCart}
-        cartItems={cartItems}
         backgroundColor={cartBackgroundColor}
-        onUpdateQuantity={updateQuantity}
-        onRemoveItem={removeItem}
         onCheckout={handleCheckout}
+        onUpdateQuantity={onUpdateQuantity} // Pass the update quantity function
+        onRemoveItem={onRemoveItem} // Pass the remove item function
       />
     </nav>
   );

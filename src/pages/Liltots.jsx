@@ -16,11 +16,14 @@ import { TrendingHighlight } from "../components/trendingHighlight/TrendingHighl
 import ProductMain from "../components/product_main";
 import ShowProduct from "../components/showproduct";
 import {ProductPage} from "../components/product_page/ProductPage.jsx";
+import Favourite from "../components/Favourite";
 
 export const Liltots = () => {
   const location = useLocation();
   const isProductPage = location.pathname.includes('/liltots/products');
   console.log(isProductPage);
+  let cat = location.pathname.split('/liltots/products/')[1];
+  console.log(cat);
 
   return (
     <div style={{
@@ -34,19 +37,20 @@ export const Liltots = () => {
         brandColor="#FF6B35"
         mainNavLinks={[
           { name: "Home", href: "/liltots" },
-          { name: "Products", href: "/liltots/products" },
+          { name: "Products", href: "/liltots/products/All" },
           { name: "About Us", href: "/liltots/about" },
           { name: "Contact us", href: "/liltots/contact" }
         ]}
         categoryLinks={[
-          { name: "New Born", href: "#newborn" },
-          { name: "Infants", href: "#infants" },
-          { name: "Toddler's", href: "#toddlers" },
-          { name: "Party Wear", href: "#party-wear" },
-          { name: "Baby Essentials", href: "#baby-essentials" }
+          { name: "New Born", href: "/liltots/products/New Born" },
+          { name: "Infants", href: "/liltots/products/Infants" },
+          { name: "Toddler's", href: "/liltots/products/Toddler" },
+          { name: "Party Wear", href: "/liltots/products/Party Wear" },
+          { name: "Baby Essentials", href: "/liltots/products/Baby Essentials" }
         ]}
         bottomRowBgColor="rgba(188, 80, 144, 1)"
         mainNavLinkHoverColor="#FF6B35"
+        shopName="Lit tots"
       />
       <div style={{
         paddingTop: '120px', // Account for fixed navbar height (Navbar_2 is taller)
@@ -56,7 +60,26 @@ export const Liltots = () => {
         {isProductPage ? (
           // Product page components
           <>
-            <ProductMain
+           
+
+            {cat === "favourite" ? (
+              <>
+              <ProductMain
+              categoryName="Lil' Tots Favorite Products"
+              breadcrumbHome="Home"
+              breadcrumbCurrent="Products"
+              backgroundImage="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+              backgroundColor="#F5FFFA"
+              titleColor="#ffffff"
+              breadcrumbColor="#ffffff"
+              onHomeClick={() => window.location.href = '/liltots'}
+            />
+              // Show Favourite component when category is "Favourite"
+              <Favourite  storeName={"Lit tots"}/>
+            </> 
+            ) : (
+               <>
+              <ProductMain
               categoryName="Lil' Tots Products"
               breadcrumbHome="Home"
               breadcrumbCurrent="Products"
@@ -66,82 +89,17 @@ export const Liltots = () => {
               breadcrumbColor="#ffffff"
               onHomeClick={() => window.location.href = '/liltots'}
             />
-
-
-            <ShowProduct
-              title="Our Baby Products"
-              products={[
-                {
-                  id: 1,
-                  name: "Baby Onesie",
-                  category: "New Born",
-                  price: "$19.99",
-                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(188, 80, 144, 1)"
-                },
-                {
-                  id: 2,
-                  name: "Soft Blanket",
-                  category: "Baby Essentials",
-                  price: "$29.99",
-                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(188, 80, 144, 1)"
-                },
-                {
-                  id: 3,
-                  name: "Toddler Dress",
-                  category: "Toddler's",
-                  price: "$35.99",
-                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(188, 80, 144, 1)"
-                },
-                {
-                  id: 4,
-                  name: "Party Outfit",
-                  category: "Party Wear",
-                  price: "$45.99",
-                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(188, 80, 144, 1)"
-                },
-                {
-                  id: 5,
-                  name: "Baby Shoes",
-                  category: "Infants",
-                  price: "$24.99",
-                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(188, 80, 144, 1)"
-                },
-                {
-                  id: 6,
-                  name: "Feeding Bottle",
-                  category: "Baby Essentials",
-                  price: "$15.99",
-                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(188, 80, 144, 1)"
-                },
-                {
-                  id: 7,
-                  name: "Baby Hat",
-                  category: "New Born",
-                  price: "$12.99",
-                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(188, 80, 144, 1)"
-                },
-                {
-                  id: 8,
-                  name: "Toddler Toy",
-                  category: "Toddler's",
-                  price: "$22.99",
-                  image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
-                  backgroundColor: "rgba(188, 80, 144, 1)"
-                }
-              ]}
-              backgroundColor="#F5FFFA"
-              titleColor="rgba(188, 80, 144, 1)"
-              cardTextColor="#ffffff"
-              onProductClick={(product) => console.log('Product clicked:', product)}
-              onLoadMore={() => console.log('Load more products')}
-            />
+              // Show regular product display for other categories
+              <ShowProduct
+                title="Our Baby Products"
+                shopName = "Lit tots"
+                categoryName = {cat || "all"}
+                backgroundColor="#F5FFFA"
+                titleColor="rgba(188, 80, 144, 1)"
+                cardTextColor="#ffffff"
+              />
+              </>
+            )}
           </>
         ) : (
           // Home page components

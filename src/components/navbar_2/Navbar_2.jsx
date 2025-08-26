@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Navbar_2.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import Cart from "../cart/Cart";
 import { useCart } from "../../context/CartContext";
-
+import axios from "axios";
 export default function Navbar_2({
   // Main navigation links
   mainNavLinks = [
@@ -36,15 +36,97 @@ export default function Navbar_2({
   userIconColor = "#666",
   // Cart props
   cartBackgroundColor = "#4a7c59",
-  onCartClick = () => console.log("Cart clicked"),
+  shopName
 }) {
-  const { cartItems, updateQuantity, removeItem } = useCart();
   const navigate = useNavigate();
   const [isCartOpen, setIsCartOpen] = useState(false);
+const { cartItems, addToCart, updateQuantity, removeItem, totalItems } = useCart();
+
+const handleFavoriteClick = () => {
+  // Redirect to favorites page
+  navigate(`/liltots/products/favourite`);
+};
+
+
+  const getAuthToken = () => {
+  try {
+    const cookie = document.cookie
+      .split("; ")
+      .find(row => row.startsWith("authToken="));
+    if (!cookie) return null;
+    return cookie.split("=")[1];
+  } catch (err) {
+    console.error("Error reading auth token:", err);
+    return null;
+  }
+};
+
+console.log("shop name in nav", shopName);
+
+// useEffect(() => {
+//   const fetchCartItems = async () => {
+//     try {
+//       const token = getAuthToken();
+//       if (!token) {
+//         console.warn("No auth token found, skipping cart fetch");
+//         return;
+//       }
+//       const res = await axios.get(
+//         `https://favourite-cart-uicq.onrender.com/api/cart/carts/${shopName}`,
+//         { headers: { Authorization: `Bearer ${token}` } }
+//       );
+//       setCartItems(res.data);
+//     } catch (error) {
+//       console.error("Error fetching cart:", error);
+//     }
+//   };
+
+//   if (shopName) {
+//     fetchCartItems();
+//   }
+// }, [shopName]); 
+
+// const handleUpdateQuantity = async (id, newQuantity) => {
+//   try {
+//     const token = getAuthToken();
+//     await axios.put(
+//       `https://favourite-cart-uicq.onrender.com/api/cart/update/${id}?noOfQuantity=${newQuantity}`,
+//       {},
+//       { headers: { Authorization: `Bearer ${token}` } }
+//     );
+
+//     setCartItems(prev =>
+//       prev.map(item =>
+//         item.cartId === id ? { ...item, quantity: newQuantity } : item
+//       )
+//     );
+//   } catch (error) {
+//     console.error("Error updating quantity:", error);
+//   }
+// };
+
+// const handleRemoveItem = async (id) => {
+//   try {
+//     const token = getAuthToken();
+//     await axios.delete(
+//       `https://favourite-cart-uicq.onrender.com/api/cart/delete/${id}`,
+//       { headers: { Authorization: `Bearer ${token}` } }
+//     );
+
+//     setCartItems(prev => prev.filter(item => item.cartId !== id));
+//   } catch (error) {
+//     console.error("Error removing item:", error);
+//   }
+// };
+
+
+
+  
+
 
   const handleCartClick = () => {
     setIsCartOpen(true);
-    onCartClick();
+    
   };
 
   const handleCloseCart = () => {
@@ -153,8 +235,13 @@ export default function Navbar_2({
             ))}
           </div>
 
-          {/* Right Section - Cart and Login */}
+          {/* Right Section - Cart, Favorite, and Login */}
           <div className={styles.rightSection}>
+            <div className={styles.favoriteIcon} onClick={handleFavoriteClick}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d={"M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"} fill={"#FF6B35"}/>
+              </svg>
+            </div>
             <div className={styles.cartIcon} style={{ color: cartIconColor }} onClick={handleCartClick}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 16.1 19 15 19H9C7.9 19 7 18.1 7 17V13M17 13H7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -195,15 +282,17 @@ export default function Navbar_2({
       </div>
 
       {/* Cart Slider */}
-      <Cart
-        isOpen={isCartOpen}
-        onClose={handleCloseCart}
-        cartItems={cartItems}
-        backgroundColor={cartBackgroundColor}
-        onUpdateQuantity={updateQuantity}
-        onRemoveItem={removeItem}
-        onCheckout={handleCheckout}
-      />
+<Cart
+  isOpen={isCartOpen}
+  onClose={handleCloseCart}
+  shopName={shopName}
+  backgroundColor={cartBackgroundColor}
+  onCheckout={handleCheckout}
+  cartItemsSent={cartItems}          // Use cart from context
+  onUpdateQuantity={updateQuantity}   // Use context function
+  onRemoveItem={removeItem}  
+/>
+
     </nav>
   );
 }

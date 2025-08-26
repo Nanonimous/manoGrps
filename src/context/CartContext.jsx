@@ -1,211 +1,197 @@
-import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from "react";
+import axios from "axios";
 
 const CartContext = createContext();
+export const useCart = () => useContext(CartContext);
 
-// Simple API service functions
-const cartApi = {
-  getCart: async () => {
+export const CartProvider = ({ shopName, children }) => {
+  const [cartItems, setCartItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const debounceTimers = useRef({}); // store debounce timers per cart item
+
+  // --- Utils ---
+  const getAuthToken = () => {
     try {
-      const response = await fetch('/api/cart');
-      if (!response.ok) throw new Error('Failed to fetch cart');
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching cart:', error);
-      return [];
+      const cookie = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("authToken="));
+      return cookie ? cookie.split("=")[1] : null;
+    } catch {
+      return null;
     }
-  },
+  };
 
-  addToCart: async (item) => {
-    try {
-      const response = await fetch('/api/cart/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(item),
-      });
-      if (!response.ok) throw new Error('Failed to add item');
-      return await response.json();
-    } catch (error) {
-      console.error('Error adding to cart:', error);
-      throw error;
+  // --- Load Cart (from localStorage first, then API) ---
+  useEffect(() => {
+    if (!shopName) return;
+
+    // Load from localStorage instantly
+    const savedCart = localStorage.getItem(`cart-${shopName}`);
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
     }
-  },
 
-  updateCartItem: async (id, quantity) => {
-    try {
-      const response = await fetch(`/api/cart/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ quantity }),
-      });
-      if (!response.ok) throw new Error('Failed to update item');
-      return await response.json();
-    } catch (error) {
-      console.error('Error updating cart:', error);
-      throw error;
-    }
-  },
+    // Fetch from API
+    const fetchCart = async () => {
+      const token = getAuthToken();
+      if (!token) return;
 
-  removeFromCart: async (id) => {
-    try {
-      const response = await fetch(`/api/cart/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) throw new Error('Failed to remove item');
-      return await response.json();
-    } catch (error) {
-      console.error('Error removing from cart:', error);
-      throw error;
-    }
-  },
-
-  clearCart: async () => {
-    try {
-      const response = await fetch('/api/cart/clear', {
-        method: 'DELETE',
-      });
-      if (!response.ok) throw new Error('Failed to clear cart');
-      return await response.json();
-    } catch (error) {
-      console.error('Error clearing cart:', error);
-      throw error;
-    }
-  },
-};
-
-const cartReducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_CART':
-      return action.payload;
-    
-    case 'ADD_ITEM':
-      const existingItem = state.find(item => item.id === action.payload.id);
-      if (existingItem) {
-        return state.map(item =>
-          item.id === action.payload.id
-            ? { ...item, quantity: item.quantity + action.payload.quantity }
-            : item
+      try {
+        setIsLoading(true);
+        const res = await axios.get(
+          `https://favourite-cart-uicq.onrender.com/api/cart/carts/${shopName}`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
+        setCartItems(res.data || []);
+      } catch (err) {
+        console.error("❌ Failed to fetch cart:", err);
+      } finally {
+        setIsLoading(false);
       }
-      return [...state, action.payload];
-    
-    case 'REMOVE_ITEM':
-      return state.filter(item => item.id !== action.payload);
-    
-    case 'UPDATE_QUANTITY':
-      return state.map(item =>
-        item.id === action.payload.id
-          ? { ...item, quantity: action.payload.quantity }
+    };
+
+    fetchCart();
+  }, [shopName]);
+
+  // --- Persist cart to localStorage ---
+  useEffect(() => {
+    if (shopName) {
+      localStorage.setItem(`cart-${shopName}`, JSON.stringify(cartItems));
+    }
+  }, [cartItems, shopName]);
+
+  // --- Add Item (Optimistic) ---
+const addToCart = async (product, quantity) => {
+  const token = getAuthToken();
+  if (!token) return alert("Please log in first!");
+
+  // --- Optimistic Update ---
+  setCartItems((prev) => {
+    const exists = prev.find((item) => item.productId === product.productId);
+    if (exists) {
+      return prev.map((item) =>
+        item.productId === product.productId
+          ? { ...item, quantity: item.quantity + quantity }
           : item
       );
-    
-    case 'CLEAR_CART':
-      return [];
-    
-    default:
-      return state;
+    }
+    return [
+      ...prev,
+      {
+        cartId: Math.random().toString(36).slice(2), // temporary id
+        productId: product.productId,
+        productName: product.productName,
+        productSellingPrice: product.productSellingPrice,
+        quantity,
+      },
+    ];
+  });
+
+  try {
+    await axios.post(
+      "https://favourite-cart-uicq.onrender.com/api/cart/add",
+      {
+        productCode: product.productCode,
+        productId: product.productId,
+        noOfQuantity: quantity,
+        storeName: shopName,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    // 🔥 Refresh cart to sync with backend
+    const res = await axios.get(
+      `https://favourite-cart-uicq.onrender.com/api/cart/carts/${shopName}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    setCartItems(res.data || []);
+  } catch (err) {
+    console.error("❌ Add to cart failed:", err);
+
+    // ❌ Rollback on failure
+    setCartItems((prev) =>
+      prev.filter((item) => item.productId !== product.productId)
+    );
   }
 };
 
-export const CartProvider = ({ children }) => {
-  const [cartItems, dispatch] = useReducer(cartReducer, []);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // --- Update Quantity (Optimistic + Debounced API) ---
+  const updateQuantity = (cartId, quantity) => {
+    if (quantity < 1) return;
 
-  // Load cart from API on mount
-  useEffect(() => {
-    const loadCart = async () => {
-      setLoading(true);
+    // Optimistic UI
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.cartId === cartId ? { ...item, quantity } : item
+      )
+    );
+
+    const token = getAuthToken();
+    if (!token) return;
+
+    // Debounce API call
+    if (debounceTimers.current[cartId]) {
+      clearTimeout(debounceTimers.current[cartId]);
+    }
+    debounceTimers.current[cartId] = setTimeout(async () => {
       try {
-        const items = await cartApi.getCart();
-        dispatch({ type: 'SET_CART', payload: items });
+        await axios.put(
+          `https://favourite-cart-uicq.onrender.com/api/cart/update/${cartId}?noOfQuantity=${quantity}`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
       } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        console.error("❌ Failed to update quantity:", err);
       }
-    };
-    
-    loadCart();
-  }, []);
+    }, 500); // wait 0.5s before hitting API
+  };
 
-  const addItem = async (item) => {
-    setLoading(true);
+  // --- Remove Item (Optimistic) ---
+  const removeItem = async (cartId) => {
+    const token = getAuthToken();
+    if (!token) return;
+
+    // Optimistic removal
+    const prevCart = [...cartItems];
+    setCartItems((prev) => prev.filter((item) => item.cartId !== cartId));
+
     try {
-      await cartApi.addToCart(item);
-      const updatedCart = await cartApi.getCart();
-      dispatch({ type: 'SET_CART', payload: updatedCart });
+      await axios.delete(
+        `https://favourite-cart-uicq.onrender.com/api/cart/delete/${cartId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      console.error("❌ Failed to remove item, rolling back:", err);
+      setCartItems(prevCart); // rollback
     }
   };
 
-  const removeItem = async (id) => {
-    setLoading(true);
-    try {
-      await cartApi.removeFromCart(id);
-      const updatedCart = await cartApi.getCart();
-      dispatch({ type: 'SET_CART', payload: updatedCart });
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // --- Totals ---
+  const totalAmount = () =>
+    cartItems.reduce(
+      (sum, item) =>
+        sum +
+        (parseFloat(item.productSellingPrice || item.productPrice) || 0) *
+          item.quantity,
+      0
+    );
 
-  const updateQuantity = async (id, quantity) => {
-    setLoading(true);
-    try {
-      if (quantity <= 0) {
-        await removeItem(id);
-      } else {
-        await cartApi.updateCartItem(id, quantity);
-        const updatedCart = await cartApi.getCart();
-        dispatch({ type: 'SET_CART', payload: updatedCart });
-      }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const clearCart = async () => {
-    setLoading(true);
-    try {
-      await cartApi.clearCart();
-      dispatch({ type: 'SET_CART', payload: [] });
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const totalItems = () =>
+    cartItems.reduce((sum, item) => sum + (item.quantity || 0), 0);
 
   return (
-    <CartContext.Provider value={{
-      cartItems,
-      loading,
-      error,
-      addItem,
-      removeItem,
-      updateQuantity,
-      clearCart,
-    }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        isLoading,
+        addToCart,
+        updateQuantity,
+        removeItem,
+        totalAmount,
+        totalItems,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
-};
-
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error('useCart must be used within a CartProvider');
-  }
-  return context;
 };

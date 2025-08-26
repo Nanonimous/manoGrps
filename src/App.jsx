@@ -1,27 +1,31 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { CartProvider } from "./context/CartContext.jsx";
+import ShopNameProvider from "./components/ShopNameProvider/ShopNameProvider.jsx";
 import { MainManoGrp } from "./pages/MainManoGrp.jsx";
 import { Liltots } from "./pages/Liltots.jsx";
 import { Wowla } from "./pages/Wowla.jsx";
 import { ManoStore } from "./pages/ManoStore.jsx";
 import { Authentication } from "./pages/Authentication.jsx";
-import Payment from "./components/payment/Payment.jsx"
+import { Payments } from "./pages/Payments.jsx";
+import PaymentTest from "./components/PaymentTest/PaymentTest.jsx"
+import { MainProduct } from "./pages/MainProduct.jsx";
+
 const App = () => (
   <BrowserRouter>
-    <CartProvider>
+    <ShopNameProvider>
       <Routes>
         <Route path="/" element={<MainManoGrp />} />
         <Route path="/liltots" element={<Liltots />} />
-        <Route path="/liltots/:link" element={<Liltots />} />
+        <Route path="/liltots/products/:link" element={<Liltots />} />
         <Route path="/wowla" element={<Wowla />} />
-        <Route path="/wowla/:link" element={<Wowla />} />
+        <Route path="/wowla/products/:link" element={<Wowla />} />
         <Route path="/manostore" element={<ManoStore />} />
-        <Route path="/manostore/:link" element={< ManoStore />} />
+        <Route path="/manostore/products/:link" element={< ManoStore />} />
         <Route path="/authentication" element={<Authentication />} />
-        <Route path="/payment" element={<Payment />} />
-
+        <Route path="/payment" element={<Payments />} />
+        <Route path="/test" element={<PaymentTest/>}></Route>
+        <Route path="/:shopname/products/:Cat" element={<MainProduct/>} />
       </Routes>
-    </CartProvider>
+    </ShopNameProvider>
   </BrowserRouter>
 );
 
