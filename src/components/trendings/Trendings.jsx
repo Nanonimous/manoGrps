@@ -1,32 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./Trendings.module.css";
 import { ProductCard_1 } from "../ProductCard_1/ProductCard_1";
 
 export const Trendings = ({
   title = "Trending & New Arrivals",
-  products = [
-    {
-      id: 1,
-      title: "Off-Road 4W Car Hot Wheels",
-      cat: "Hot Wheels",
-      price: "1700",
-      image: "/images/productCard/card.jpg"
-    },
-    {
-      id: 2,
-      title: "Off-Road 4W Car Hot Wheels",
-      cat: "Hot Wheels",
-      price: "1700",
-      image: "/images/productCard/card.jpg"
-    },
-    {
-      id: 3,
-      title: "Off-Road 4W Car Hot Wheels",
-      cat: "Hot Wheels",
-      price: "1700",
-      image: "/images/productCard/card.jpg"
-    }
-  ],
   showViewAllButton = true,
   viewAllText = "View all products",
   onViewAllClick = () => console.log("View all clicked"),
@@ -42,6 +20,34 @@ export const Trendings = ({
   cardButtonColor = "#e91e63",
   cardButtonTextColor = "#ffffff"
 }) => {
+  const [products, setProducts] = useState([]);
+
+useEffect(() => {
+  const getTrend = async () => {
+    try {
+      const res1 = await axios.get("https://product-7boc.onrender.com/api/product/trend?storeName=Lit%20tots")
+      const res2 = await axios.get("https://product-7boc.onrender.com/api/product/trend?storeName=wowla")
+      const res3 = await axios.get("https://product-7boc.onrender.com/api/product/trend?storeName=manostore")
+
+      // Convert single object → array
+      const products1 = Array.isArray(res1.data) ? res1.data : [res1.data];
+      const products2 = Array.isArray(res2.data) ? res2.data : [res2.data];
+      const products3 = Array.isArray(res3.data) ? res3.data : [res3.data];
+
+      // Merge all
+      const mergedProducts = [...products1, ...products2, ...products3];
+
+      console.log("Merged Products:", mergedProducts);
+      setProducts(mergedProducts);
+    } catch (error) {
+      console.error("Error fetching trending products:", error);
+    }
+  };
+
+  getTrend();
+}, []);
+
+
   return (
     <div className={styles.trendingsContainer} style={{ backgroundColor }}>
       <div className={styles.contentWrapper}>
@@ -51,7 +57,7 @@ export const Trendings = ({
             className={styles.sectionTitle}
             style={{
               color: titleColor,
-              '--title-color': titleColor
+              "--title-color": titleColor
             }}
           >
             {title}
@@ -61,18 +67,19 @@ export const Trendings = ({
         {/* Products Grid */}
         <div className={styles.productsGrid}>
           {products.map((product) => (
-            <div key={product.id} className={styles.productWrapper}>
+            <div key={product.id || product._id} className={styles.productWrapper}>
               <ProductCard_1
-                title={product.title}
-                cat={product.cat}
-                price={product.price}
-                image={product.image}
+                title={product.productName}
+                price={product.productSellingPrice}
+                image={product.productImageId}
                 cardBackgroundColor={cardBackgroundColor}
                 titleColor={cardTitleColor}
                 categoryColor={cardCategoryColor}
                 priceColor={cardPriceColor}
                 buttonColor={cardButtonColor}
                 buttonTextColor={cardButtonTextColor}
+                cat = {product.category}
+                id={product.productId}
               />
             </div>
           ))}
@@ -87,7 +94,7 @@ export const Trendings = ({
               style={{
                 color: buttonColor,
                 backgroundColor: buttonBgColor,
-                '--hover-bg-color': buttonHoverBgColor
+                "--hover-bg-color": buttonHoverBgColor
               }}
             >
               {viewAllText}

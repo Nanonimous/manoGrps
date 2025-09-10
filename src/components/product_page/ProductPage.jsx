@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./ProductPage.module.css";
 import { useCart } from "../../context/CartContext";
 
 export const ProductPage = ({productDetails}) => {
   const location = useLocation();
+  const navigate = useNavigate();
     const { addToCart } = useCart();   // 👈 from context
 
   console.log("show it ",productDetails);
@@ -16,10 +17,24 @@ const [quantity, setQuantity] = useState(1);
 
 const [isWishlisted, setIsWishlisted] = useState(false);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+const [cartLoading, setCartLoading] = useState(false);
+const [buyLoading, setBuyLoading] = useState(false);
+const [addedToCart, setAddedToCart] = useState(false); // ✅ new state
+
+
+    useEffect(() => {
+      const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
+      if (token) {
+        setIsLoggedIn(true);
+      }
+    }, []);
 
 
 
   const handleQuantityChange = (change) => {
+
     const newQuantity = quantity + change;
     if (newQuantity >= 1) {
       setQuantity(newQuantity);
@@ -41,25 +56,84 @@ const [isWishlisted, setIsWishlisted] = useState(false);
   }
 };
 const handleAddToCart = async () => {
-  const cartItem = {
-    cartId: productDetails.productId, // 👈 use productId as unique cartId
-    productName: productDetails.productName,
-    productPrice: productDetails.productSellingPrice,
-    quantity: quantity,
-    productImageId: productDetails.productImageId,
-  };
+  if (!isLoggedIn) {
+    const confirmDelete = window.confirm("Login to use?");
+    if (confirmDelete) {
+      navigate("/authentication", {
+        state: { from: location.pathname + location.search },
+      });
+    }
+    return;
+  }
 
-  addToCart(cartItem, quantity);
-  alert("Product added to cart");
+  if (cartLoading) return; // prevent spamming
+  setCartLoading(true);
+
+  try {
+    const result = await addToCart(productDetails, quantity);
+    switch (result.status) {
+      case "exists":
+        alert("This item is already in your cart!");
+        break;
+      case "added":
+        setAddedToCart(true); // ✅ show success text
+        setTimeout(() => setAddedToCart(false), 2000); // reset after 2 sec
+        break;
+      case "unauthorized":
+        alert("Please log in first!");
+        break;
+      case "failed":
+        alert("Failed to add item to cart. Please try again.");
+        break;
+      default:
+        break;
+    }
+  } catch (err) {
+    console.error("Error adding to cart:", err);
+  } finally {
+    setCartLoading(false);
+  }
 };
 
-  const handleBuyNow = () => {
-    console.log(`Buy now: ${quantity} item(s)`);
-    // Add your buy now logic here
-  };
+
+
+ const handleBuyNow = async () => {
+  if (!isLoggedIn) {
+    const confirmDelete = window.confirm("login to use?");
+    if (confirmDelete) {
+      navigate("/authentication", { state: { from: location.pathname + location.search } });
+    }
+    return;
+  }
+
+  if (buyLoading) return;
+  setBuyLoading(true);
+
+  try {
+    navigate("/payment", { 
+      state: { 
+        product: {
+          id: productDetails.productId,
+          name: productDetails.productName,
+          code: productDetails.productCode,
+          price: productDetails.productSellingPrice,
+          quantity: quantity,
+          staffName : productDetails.isStaff,
+          img: `https://lh3.googleusercontent.com/d/${productDetails.productImageId[0]}=w1000-h1000-rw`
+        },
+        shopName : productDetails.storeName
+      }
+    });
+  } finally {
+    setBuyLoading(false);
+  }
+};
+
+
   const [wishlistLoading, setWishlistLoading] = useState(false);
 
 const toggleWishlist = async () => {
+  if (isLoggedIn) {
   if (wishlistLoading) return; // ⛔ prevent spamming
   const token = getAuthToken();
 
@@ -89,6 +163,12 @@ const toggleWishlist = async () => {
     setIsWishlisted((prev) => !prev); // revert if failed
   } finally {
     setWishlistLoading(false);
+  }
+  }else{
+    const confirmDelete = window.confirm("login to use?");
+  if(confirmDelete){
+    navigate("/authentication", { state: { from: location.pathname + location.search } });
+  }
   }
 };
 
@@ -184,40 +264,55 @@ useEffect(() => {
                 <button 
                   className={styles.quantityBtn}
                   onClick={() => handleQuantityChange(1)}
+                  disabled = {quantity >= productDetails.productQuantity }
                 >
                   +
                 </button>
               </div>
             </div>
 
+
             {/* Action Buttons */}
             <div className={styles.actionButtons}>
-              <button 
-                className={styles.addToCartBtn}
-                onClick={handleAddToCart}
-              >
-                Add to cart
-              </button>
+            <button 
+              className={styles.addToCartBtn}
+              onClick={handleAddToCart}
+              disabled={productDetails.productQuantity === 0 || cartLoading}
+            >
+              {cartLoading 
+                ? <i className="ri-loader-4-line ri-spin"></i> 
+                : addedToCart 
+                  ? "✅ Added" 
+                  : "Add to Cart"}
+            </button>
+
+
               <button 
                 className={styles.buyNowBtn}
                 onClick={handleBuyNow}
+                disabled={productDetails.productQuantity === 0 || buyLoading}
               >
-                Buy Now
+                {buyLoading 
+                  ? <i className="ri-loader-4-line ri-spin"></i> 
+                  : (productDetails.productQuantity === 0 ? "Out of Stock" : "Buy Now")}
               </button>
+
               <button 
                 className={`${styles.wishlistBtn} ${isWishlisted ? styles.wishlisted : ''}`}
                 onClick={toggleWishlist}
                 disabled={wishlistLoading}
               >
-                {wishlistLoading ? (
-                  <i className="ri-loader-4-line ri-spin"></i> // spinner
-                ) : (
-                  <i className="ri-heart-fill"></i>
-                )}
+                {wishlistLoading 
+                  ? <i className="ri-loader-4-line ri-spin"></i> 
+                  : <i className="ri-heart-fill"></i>}
               </button>
-
             </div>
 
+                  {
+                productDetails.productQuantity < 5 && (
+                  <p className={styles.noProductLeft}>{productDetails.productQuantity == 0 ? "out of stocks" :`allmost out of stocks Only ${productDetails.productQuantity} is Left`} </p>
+                )
+              } 
             {/* Policy Sections */}
             <div className={styles.policySections}>
               <div className={styles.policySection}>

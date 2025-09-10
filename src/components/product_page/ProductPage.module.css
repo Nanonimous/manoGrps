@@ -15,6 +15,32 @@
   align-items: flex-start;
 }
 
+.noProductLeft{
+  color: red;
+}
+
+/* Disabled states */
+.addToCartBtn:disabled,
+.buyNowBtn:disabled {
+  background-color: #ccc !important;
+  color: #666 !important;
+  border: none !important;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.addToCartBtn:disabled:hover,
+.buyNowBtn:disabled:hover {
+  background-color: #ccc !important;
+  color: #666 !important;
+}
+
+/* Loader icon */
+.ri-loader-4-line {
+  font-size: 18px;
+}
+
+
 /* Left side - Product Images */
 .productImagesSection {
   display: flex;

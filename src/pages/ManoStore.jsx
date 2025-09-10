@@ -19,9 +19,9 @@ import {ProductPage} from "../components/product_page/ProductPage.jsx";
 
 export const ManoStore = () => {
   const location = useLocation();
-  const isProductPage = location.pathname.includes('/manostore/products/all');
+  const isProductPage = location.pathname.includes('/Mano-store/products');
   console.log(isProductPage);
-  const cat = location.pathname.split("/")[3] || "all";
+  let cat = location.pathname.split('/Mano-store/products/')[1];
   console.log(cat);
   return (
     <div style={{
@@ -34,21 +34,22 @@ export const ManoStore = () => {
         tagline="LITTLE LOOKS BIG LOVE"
         brandColor="#FF6B35"
         mainNavLinks={[
-          { name: "Home", href: "/manostore" },
-          { name: "Products", href: "/manostore/products/all" },
-          { name: "About Us", href: "/manostore/about" },
-          { name: "Contact us", href: "/womanostorewla/contact" }
+          { name: "Home", href: "/Mano-store" },
+          { name: "Products", href: "/Mano-store/products/All" },
+          { name: "About Us", href: "/Mano-store/about" },
+          { name: "Contact us", href: "/Mano-store/contact" }
         ]}
         categoryLinks={[
-          { name: "Home Appliances", href: "/manostore/products/Home Appliances" },
-          { name: "Toys", href: "/manostore/products/Toys" },
-          { name: "Return Gift's", href: "/manostore/products/Return Gift" },
-          { name: "Carpets", href: "/manostore/products/Carpets" },
-          { name: "Wallpaper's", href: "/manostore/products/Wallpaper" },
-          { name: "Stationaries", href: "manostore/products/Stationaries" }
+          { name: "Home Appliances", href: "/Mano-store/products/Home Appliances" },
+          { name: "Toys", href: "/Mano-store/products/Toys" },
+          { name: "Return Gift's", href: "/Mano-store/products/Return Gift" },
+          { name: "Carpets", href: "/Mano-store/products/Carpets" },
+          { name: "Wallpaper's", href: "/Mano-store/products/Wallpaper" },
+          { name: "Stationaries", href: "/Mano-store/products/Stationaries" }
         ]}
         bottomRowBgColor="rgba(3, 4, 94, 1)"
         mainNavLinkHoverColor="#FF6B35"
+        shopName="Mano-store"
       />
       <div style={{
         paddingTop: '120px', // Account for fixed navbar height (Navbar_2 is taller)
@@ -58,6 +59,9 @@ export const ManoStore = () => {
         {isProductPage ? (
           // Product page components
           <>
+
+          {cat === "favourite" ? (
+              <>
             <ProductMain
               categoryName="Mano Store Products"
               breadcrumbHome="Home"
@@ -66,18 +70,32 @@ export const ManoStore = () => {
               backgroundColor="#F5FFFA"
               titleColor="#ffffff"
               breadcrumbColor="#ffffff"
-              onHomeClick={() => window.location.href = '/manostore'}
+              onHomeClick={() => window.location.href = '/Mano-store'}
             />
-
-
+            <Favourite  storeName={"manostore"} mainColor={"rgba(3, 4, 94, 1)"}/>
+            </>
+          ) : ( 
+            <>
+            <ProductMain
+              categoryName="Mano Store Products"
+              breadcrumbHome="Home"
+              breadcrumbCurrent="Products"
+              backgroundImage="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+              backgroundColor="#F5FFFA"
+              titleColor="#ffffff"
+              breadcrumbColor="#ffffff"
+              onHomeClick={() => window.location.href = '/Mano-store'}
+            />
             <ShowProduct
               title="Our Home Products"
-              shopName = "Mano Store" 
-              categoryName = {cat || "all"}
+              shopName = "manostore" 
+              categoryName = {cat || "All"}
               backgroundColor="#F5FFFA"
               titleColor="rgba(3, 4, 94, 1)"
               cardTextColor="#ffffff"
             />
+          </>
+          )}
           </>
         ) : (
           // Home page components
@@ -212,10 +230,6 @@ export const ManoStore = () => {
           </>
         )}
 
-        <Footer
-          companyName="Mano Store"
-          backgroundColor="rgba(3, 4, 94, 1)"
-        />
       </div>
     </div>
   );

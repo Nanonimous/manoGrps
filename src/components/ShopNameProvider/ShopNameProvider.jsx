@@ -9,16 +9,17 @@ const ShopNameProvider = ({ children }) => {
   // Determine shop name based on the current route
   useEffect(() => {
     const getShopName = () => {
-      const path = location.pathname;
-      
+      // ✅ Decode pathname to convert %20 back into spaces
+      const path = decodeURIComponent(location.pathname);
+
       if (path.startsWith('/liltots')) {
         return 'Lit tots';
-      } else if (path.startsWith('/wowla')) {
-        return 'Wowla';
-      } else if (path.startsWith('/manostore')) {
-        return 'Mano Store';
+      } else if (path.startsWith('/Wowla-store') || path.startsWith('/wowla')) {
+        return 'wowla';
+      } else if (path.startsWith('/Mano-store')) {
+        return 'manostore';
       } else if (path === '/') {
-        return 'Main Store'; // Default shop name for home page
+        return 'manogroups'; // Default shop name for home page
       }
       
       return 'Lit tots'; // Fallback shop name

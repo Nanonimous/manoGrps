@@ -30,6 +30,103 @@
   right: 0;
 }
 
+.itemPricing {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.9rem;
+}
+
+.unitPrice {
+  opacity: 0.8;
+}
+
+.subtotal {
+  font-weight: bold;
+}
+
+.itemActions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 8px;
+  margin-left: auto; /* pushes actions to the right */
+}
+
+.checkoutButtonSmall {
+  background: linear-gradient(135deg, #1d4d2c, #145a32);
+  color: #ffffff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.checkoutButtonSmall:hover {
+  background: linear-gradient(135deg, #145a32, #0d3d25);
+  transform: translateY(-2px);
+}
+
+.checkoutButtonSmall:active {
+  transform: translateY(0);
+}
+
+.checkoutButtonSmall:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+
+.checkoutButtonSmall:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.loadingSpinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.checkoutButtonSmall {
+  background-color: #1d4d2c;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.2s ease;
+}
+
+.checkoutButtonSmall:hover {
+  background-color: #145a32;
+}
+
+
+
 /* Header */
 .header {
   display: flex;
@@ -89,6 +186,20 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+.notLoggedIn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 80%;
+}
+
+.notLoggedIn button {
+  background-color: white;
+  color: black;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  border: none;
+}
 .emptyCartIcon {
   margin-bottom: 16px;
   color: rgba(255, 255, 255, 0.6);

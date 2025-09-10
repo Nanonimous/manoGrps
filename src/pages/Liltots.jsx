@@ -1,9 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { ShopNowCon_1 } from "../components/shopNowCon_1/ShopNowCon_1.jsx";
-import { ShopByNeed } from "../components/shopByNeed/ShopByNeed.jsx";
 import { WhyChoseUs } from "../components/whyChoseUs/WhyChoseUs.jsx";
-import { TopBrands } from "../components/topBrands/TopBrands.jsx";
 import Location from "../components/location/Location";
 import EnquiryForm from "../components/enquiryForm/EnquiryForm";
 import Footer from "../components/footer/Footer";
@@ -15,11 +13,11 @@ import { About_us } from "../components/About_us/About_us";
 import { TrendingHighlight } from "../components/trendingHighlight/TrendingHighlight";
 import ProductMain from "../components/product_main";
 import ShowProduct from "../components/showproduct";
-import {ProductPage} from "../components/product_page/ProductPage.jsx";
 import Favourite from "../components/Favourite";
 
 export const Liltots = () => {
   const location = useLocation();
+  
   const isProductPage = location.pathname.includes('/liltots/products');
   console.log(isProductPage);
   let cat = location.pathname.split('/liltots/products/')[1];
@@ -50,7 +48,7 @@ export const Liltots = () => {
         ]}
         bottomRowBgColor="rgba(188, 80, 144, 1)"
         mainNavLinkHoverColor="#FF6B35"
-        shopName="Lit tots"
+        shopName="liltots"
       />
       <div style={{
         paddingTop: '120px', // Account for fixed navbar height (Navbar_2 is taller)
@@ -75,7 +73,7 @@ export const Liltots = () => {
               onHomeClick={() => window.location.href = '/liltots'}
             />
               // Show Favourite component when category is "Favourite"
-              <Favourite  storeName={"Lit tots"}/>
+              <Favourite  storeName={"Lit tots"} mainColor={"rgba(188, 80, 144, 1)"}/>
             </> 
             ) : (
                <>
@@ -89,7 +87,6 @@ export const Liltots = () => {
               breadcrumbColor="#ffffff"
               onHomeClick={() => window.location.href = '/liltots'}
             />
-              // Show regular product display for other categories
               <ShowProduct
                 title="Our Baby Products"
                 shopName = "Lit tots"
@@ -225,6 +222,7 @@ export const Liltots = () => {
           buttonColor="rgba(188, 80, 144, 1)"
           buttonBgColor="white"
           buttonHoverColor="rgba(150, 60, 120, 1)"
+          shopName = "Lil tots"
         />
 
             <Footer
@@ -234,10 +232,6 @@ export const Liltots = () => {
           </>
         )}
 
-        <Footer
-          companyName="Lil Tots"
-          backgroundColor="rgba(188, 80, 144, 1)"
-        />
       </div>
     </div>
   );

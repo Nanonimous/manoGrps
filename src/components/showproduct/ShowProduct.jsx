@@ -7,6 +7,7 @@ export default function ShowProduct({
   title = "Our Products",
   shopName,
   categoryName,
+  products: externalProducts = null, // ✅ NEW
   backgroundColor = "#F5FFFA",
   titleColor = "rgba(53, 94, 59, 1)",
   cardTextColor = "#ffffff",
@@ -16,29 +17,43 @@ export default function ShowProduct({
   currentPage = 1,
   itemsPerPage = 20,
   showFilter = true,
-  showSearch  = true
+  showSearch  = true,
+  deleteFav
 }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
   const [products , setProduct] = useState([]);
-  const [totalProducts , setTotalProducts] = useState(0);
   
-const url = categoryName === "All" 
-  ? `https://product-whe4.onrender.com/api/product/approved?storeName=${shopName}&page=${pageNumber}` 
-  : `https://product-whe4.onrender.com/api/product/category?category=${categoryName}&storeName=${shopName}page=${pageNumber}`;
-
-// ✅ Fetch all products at once
-useEffect(() => {
-  const fetchProducts = async () => {
-    try {
-      const prod = await axios.get(url);
-      setProduct(prod.data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
+  // ✅ If externalProducts is passed, use it directly
+  useEffect(() => {
+    if (externalProducts) {
+      setProduct(externalProducts);
+      return;
     }
-  };
-  fetchProducts();
-}, [categoryName, shopName]);
+
+    // fallback fetch if no external products
+    const url = categoryName === "All" 
+      ? `https://product-7boc.onrender.com/api/product/approved?storeName=${shopName}&page=${pageNumber}` 
+      : `https://product-7boc.onrender.com/api/product/category?category=${categoryName}&storeName=${shopName}&page=${pageNumber}`;
+
+    const fetchProducts = async () => {
+      try {
+        const prod = await axios.get(url);
+         const data = prod.data;
+         console.log(data,shopName)
+
+    // Ensure products is always an array
+      const productsArray = Array.isArray(data) ? data : [data];
+
+      setProduct(productsArray);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, [categoryName, shopName, pageNumber, externalProducts]);
+
 
 // ✅ Remove getCount() useEffect completely
 
@@ -166,11 +181,15 @@ const handlePageChange = (page) => {
               <ProductCard_2
                image = {product.productImageId}
                 title={product.productName}
-                cat={product.productDescription}
-                price={product.productSellingPrice}
+                cat={categoryName == "favourite" ? "favourite" : product.category}
+                price={product.productSellingPrice }
                 backgroundColor={titleColor}
                 productId={product.productId}
+                productCode={product.productCode}
                 shopName={shopName}
+                isfav={categoryName}
+                deleteFav={deleteFav}
+                productQuantity={product.productQuantity}
               />
             </div>
           ))}

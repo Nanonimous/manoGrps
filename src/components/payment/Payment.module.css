@@ -159,51 +159,80 @@ button.payNow:hover {
     background-color: #163d25;
 }
 
-/* ---------------- RESPONSIVE ---------------- */
-@media (max-width: 1024px) {
-    .paymentContainer {
-        padding: 30px;
-        gap: 30px;
-    }
+
+/* Payment Options */
+/* Payment Options */
+.paymentOptions {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
 }
+
+.optionCard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.optionCard input {
+  display: none; /* hide default radio */
+}
+
+.optionCard span {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Hover + Active */
+.optionCard:hover {
+  border-color: #1a4d2e;
+  background: #f9fcfa;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.optionCard.active {
+  border-color: #1a4d2e;
+  background: #e8f5e9;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(26,77,46,0.2);
+}
+
+/* Emoji/Icon Bigger */
+.optionCard span::before {
+  display: block;
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.optionCard[value="cod"] span::before {
+  content: "💵";
+}
+
+.optionCard[value="online"] span::before {
+  content: "💳";
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-    .paymentContainer {
-        flex-direction: column;   /* stack vertically */
-        padding: 20px;
-    }
+  .paymentOptions {
+    flex-direction: column;
+  }
 
-    /* Put product summary first */
-    .rightSection {
-        order: -1;     /* move to top */
-        margin-bottom: 20px;
-        width: 100%;
-    }
-
-    .leftSection {
-        width: 100%;
-    }
-
-    .row {
-        flex-direction: column;  /* stack inputs vertically */
-    }
+  .optionCard {
+    width: 100%;
+  }
 }
 
-@media (max-width: 480px) {
-    .paymentContainer {
-        padding: 15px;
-    }
-
-    h2 {
-        font-size: 18px;
-    }
-
-    input, textarea {
-        font-size: 13px;
-        padding: 10px;
-    }
-
-    button.payNow {
-        font-size: 14px;
-        padding: 12px;
-    }
-}

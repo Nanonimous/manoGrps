@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Navbar_1.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import Cart from "../cart/Cart";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 
 export default function Navbar_1({
   brandName = "Mano Groups",
@@ -10,141 +10,108 @@ export default function Navbar_1({
     { href: "/manostore", text: "Mano Store's" },
     { href: "/wowla", text: "Wowla" },
     { href: "/liltots", text: "Lil tot's" },
-    { href: "#contact", text: "Contact us" }
+    { href: "#contact", text: "Contact us" },
   ],
   backgroundColor = "#ffffff",
-  cartBackgroundColor = "#4a7c59",
-  onCartClick = () => console.log("Cart clicked"),
-  onUpdateQuantity = () => console.log("Update quantity"),
-  onRemoveItem = () => console.log("Remove item"),
-  onCheckout = () => console.log("Checkout"),
 }) {
+  const { user } = useUser();
+  const location = useLocation();
   const navigate = useNavigate();
-  const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const handleCartClick = () => {
-    setIsCartOpen(true);
-    onCartClick();
-  };
-
-  const handleCloseCart = () => {
-    setIsCartOpen(false);
-  };
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const isLoggedIn = !!user;
+  console.log("islogged in ",isLoggedIn);
 
   const handleLoginClick = () => {
+    if (isLoggedIn) setIsDropdownOpen(!isDropdownOpen);
+    else navigate("/authentication", { state: { from: location } });
+  };
+
+  const handleLogout = () => {
+    document.cookie = "authToken=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;";
+    setIsDropdownOpen(false);
+    window.location.href = "/"; // reload to reset context
+  };
+
+  const handleProfileClick = () => {
+    setIsDropdownOpen(false);
+    navigate("/profile");
+  };
+
+  const renderLoginSection = () => {
     if (isLoggedIn) {
-      document.cookie = "authToken=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;";
-      setIsLoggedIn(false);
-      console.log("User logged out - cookie cleared");
-      navigate("/");
-    } else {
-      navigate("/authentication");
+      return user?.profileImageUrl ? (
+        <img src={user.profileImageUrl} alt="Profile" className={styles.profileImage} />
+      ) : (
+        <span className={styles.loginText}>Account</span>
+      );
     }
+    return <span className={styles.loginText}>Login</span>;
   };
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
-  useEffect(() => {
-    const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleCheckout = (items, total) => {
-    console.log(`Checkout with ${items.length} items, total: ${total}`);
-  };
   return (
     <nav className={styles.navbar} style={{ backgroundColor }}>
       {/* Desktop Layout */}
       <div className={styles.desktopContainer}>
-        {/* Logo/Brand */}
-        <div className={styles.brand}>
-          <h1>{brandName}</h1>
-        </div>
+        <div className={styles.brand}><h1>{brandName}</h1></div>
 
-        {/* Navigation Links */}
         <div className={styles.navLinks}>
-          {navigationLinks.map((link, index) => (
-            link.href.startsWith('#') ? (
-              <a key={index} href={link.href} className={styles.navLink}>
-                {link.text}
-              </a>
+          {navigationLinks.map((link, index) =>
+            link.href.startsWith("#") ? (
+              <a key={index} href={link.href} className={styles.navLink}>{link.text}</a>
             ) : (
-              <Link key={index} to={link.href} className={styles.navLink}>
-                {link.text}
-              </Link>
+              <Link key={index} to={link.href} className={styles.navLink}>{link.text}</Link>
             )
-          ))}
+          )}
         </div>
 
-        {/* Right Side Icons */}
         <div className={styles.rightSection}>
-          <div className={styles.cartIcon} onClick={handleCartClick}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 16.1 19 15 19H9C7.9 19 7 18.1 7 17V13M17 13H7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-          <div className={styles.loginSection} onClick={handleLoginClick}>
-            <div className={styles.userIcon}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+          <div className={styles.accountWrapper}>
+            <div className={styles.loginSection} onClick={handleLoginClick}>
+              {renderLoginSection()}
             </div>
-            <span className={styles.loginText}>{isLoggedIn ? "Logout" : "Login"}</span>
-          </div>
 
+            {isLoggedIn && isDropdownOpen && (
+              <div className={styles.dropdownMenu}>
+                <div className={styles.dropdownItem} onClick={handleProfileClick}>Profile</div>
+                <div className={styles.dropdownItem} onClick={handleLogout}>Logout</div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Mobile Layout */}
       <div className={styles.mobileContainer}>
-        {/* Top Row: Brand and Right Section */}
         <div className={styles.mobileTopRow}>
-          <div className={styles.brand}>
-            <h1>{brandName}</h1>
-          </div>
+          <div className={styles.brand}><h1>{brandName}</h1></div>
           <div className={styles.rightSection}>
-            <div className={styles.cartIcon} onClick={handleCartClick}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 16.1 19 15 19H9C7.9 19 7 18.1 7 17V13M17 13H7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <div className={styles.loginSection} onClick={handleLoginClick}>
-              <span className={styles.loginText}>{isLoggedIn ? "Logout" : "Login"}</span>
+            <div className={styles.accountWrapper}>
+              <div className={styles.loginSection} onClick={handleLoginClick}>
+                {renderLoginSection()}
+              </div>
+              {isLoggedIn && isDropdownOpen && (
+                <div className={styles.dropdownMenu}>
+                  <div className={styles.dropdownItem} onClick={handleProfileClick}>Profile</div>
+                  <div className={styles.dropdownItem} onClick={handleLogout}>Logout</div>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Bottom Row: Navigation Links */}
         <div className={styles.mobileBottomRow}>
           <div className={styles.mobileNavLinks}>
-            {navigationLinks.map((link, index) => (
-              link.href.startsWith('#') ? (
-                <a key={index} href={link.href} className={styles.mobileNavLink}>
-                  {link.text}
-                </a>
+            {navigationLinks.map((link, index) =>
+              link.href.startsWith("#") ? (
+                <a key={index} href={link.href} className={styles.mobileNavLink}>{link.text}</a>
               ) : (
-                <Link key={index} to={link.href} className={styles.mobileNavLink}>
-                  {link.text}
-                </Link>
+                <Link key={index} to={link.href} className={styles.mobileNavLink}>{link.text}</Link>
               )
-            ))}
+            )}
           </div>
         </div>
       </div>
-
-      {/* Cart Slider */}
-      <Cart
-        isOpen={isCartOpen}
-        shopName={brandName}
-        onClose={handleCloseCart}
-        backgroundColor={cartBackgroundColor}
-        onCheckout={handleCheckout}
-        onUpdateQuantity={onUpdateQuantity} // Pass the update quantity function
-        onRemoveItem={onRemoveItem} // Pass the remove item function
-      />
     </nav>
   );
 }

@@ -64,8 +64,8 @@ export const MainManoGrp = () => {
         backgroundColor="#ffffff "
         navigationLinks={[
           { href: "/", text: "Home" },
-          { href: "/manostore", text: "Mano Store's" },
-          { href: "/wowla", text: "Wowla" },
+          { href: "/Mano-store", text: "Mano Store's" },
+          { href: "/Wowla-store", text: "Wowla" },
           { href: "/liltots", text: "Lil tot's" },
           { href: "#contact", text: "Contact us" }
         ]}

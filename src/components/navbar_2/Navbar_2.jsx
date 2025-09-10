@@ -1,279 +1,156 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Navbar_2.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Cart from "../cart/Cart";
 import { useCart } from "../../context/CartContext";
-import axios from "axios";
+import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
+import { useUser } from "../../context/UserContext";
+
 export default function Navbar_2({
-  // Main navigation links
   mainNavLinks = [
     { name: "Home", href: "#home" },
     { name: "Products", href: "#products" },
     { name: "About Us", href: "#about" },
-    { name: "Contact us", href: "#contact" }
+    { name: "Contact us", href: "#contact" },
   ],
-  // Category navigation links
   categoryLinks = [
     { name: "New Born", href: "#newborn" },
     { name: "Infants", href: "#infants" },
     { name: "Toddler's", href: "#toddlers" },
     { name: "Party Wear", href: "#party-wear" },
-    { name: "Baby Essentials", href: "#baby-essentials" }
+    { name: "Baby Essentials", href: "#baby-essentials" },
   ],
-  // Brand information
   brandName = "Lil' Tots",
   tagline = "LITTLE LOOKS BIG LOVE",
   brandColor = "#FF6B35",
-  // Colors
   topRowBgColor = "#ffffff",
   bottomRowBgColor = null,
   mainNavLinkColor = "#333",
   mainNavLinkHoverColor = "#FF6B35",
   categoryLinkColor = "white",
-  // Logo/Icon colors
-  logoColor = "#F4A460",
   cartIconColor = "#666",
-  userIconColor = "#666",
-  // Cart props
   cartBackgroundColor = "#4a7c59",
-  shopName
+  shopName,
 }) {
+  const location = useLocation();
   const navigate = useNavigate();
+  const { cartItems, updateQuantity, removeItem } = useCart();
+  const { user } = useUser();
+
   const [isCartOpen, setIsCartOpen] = useState(false);
-const { cartItems, addToCart, updateQuantity, removeItem, totalItems } = useCart();
-
-const handleFavoriteClick = () => {
-  // Redirect to favorites page
-  navigate(`/liltots/products/favourite`);
-};
-
-
-  const getAuthToken = () => {
-  try {
-    const cookie = document.cookie
-      .split("; ")
-      .find(row => row.startsWith("authToken="));
-    if (!cookie) return null;
-    return cookie.split("=")[1];
-  } catch (err) {
-    console.error("Error reading auth token:", err);
-    return null;
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const isLoggedIn = !!user;
+  const correctshopName = {
+    'Wowla-store' : 'wowla',
+    'Mano-store' : 'manostore',
+    'liltots':'Lit tots'
   }
-};
-
-console.log("shop name in nav", shopName);
-
-// useEffect(() => {
-//   const fetchCartItems = async () => {
-//     try {
-//       const token = getAuthToken();
-//       if (!token) {
-//         console.warn("No auth token found, skipping cart fetch");
-//         return;
-//       }
-//       const res = await axios.get(
-//         `https://favourite-cart-uicq.onrender.com/api/cart/carts/${shopName}`,
-//         { headers: { Authorization: `Bearer ${token}` } }
-//       );
-//       setCartItems(res.data);
-//     } catch (error) {
-//       console.error("Error fetching cart:", error);
-//     }
-//   };
-
-//   if (shopName) {
-//     fetchCartItems();
-//   }
-// }, [shopName]); 
-
-// const handleUpdateQuantity = async (id, newQuantity) => {
-//   try {
-//     const token = getAuthToken();
-//     await axios.put(
-//       `https://favourite-cart-uicq.onrender.com/api/cart/update/${id}?noOfQuantity=${newQuantity}`,
-//       {},
-//       { headers: { Authorization: `Bearer ${token}` } }
-//     );
-
-//     setCartItems(prev =>
-//       prev.map(item =>
-//         item.cartId === id ? { ...item, quantity: newQuantity } : item
-//       )
-//     );
-//   } catch (error) {
-//     console.error("Error updating quantity:", error);
-//   }
-// };
-
-// const handleRemoveItem = async (id) => {
-//   try {
-//     const token = getAuthToken();
-//     await axios.delete(
-//       `https://favourite-cart-uicq.onrender.com/api/cart/delete/${id}`,
-//       { headers: { Authorization: `Bearer ${token}` } }
-//     );
-
-//     setCartItems(prev => prev.filter(item => item.cartId !== id));
-//   } catch (error) {
-//     console.error("Error removing item:", error);
-//   }
-// };
-
 
 
   
 
-
-  const handleCartClick = () => {
-    setIsCartOpen(true);
-    
-  };
-
-  const handleCloseCart = () => {
-    setIsCartOpen(false);
-  };
+  const handleFavoriteClick = () => navigate(`/${shopName}/products/favourite`);
 
   const handleLoginClick = () => {
-    navigate("/authentication");
+    if (isLoggedIn) setIsDropdownOpen(!isDropdownOpen);
+    else navigate("/authentication", { state: { from: location } });
   };
 
-  const handleCheckout = (items, total) => {
-    console.log(`Checkout with ${items.length} items, total: ${total}`);
+  const handleLogout = () => {
+    document.cookie = "authToken=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;";
+    setIsDropdownOpen(false);
+    window.location.href = "/";
   };
 
-  // Function to determine color based on category content
+  const handleProfileClick = () => {
+    setIsDropdownOpen(false);
+    navigate("/profile");
+  };
+
+  const handleCartClick = () => setIsCartOpen(true);
+  const handleCloseCart = () => setIsCartOpen(false);
+
   const getBottomNavColor = () => {
-    if (bottomRowBgColor) {
-      return bottomRowBgColor;
-    }
-
-    const categoryNames = categoryLinks.map(link => link.name.toLowerCase()).join(' ');
-
-    if (categoryNames.includes('baby') || categoryNames.includes('infant') ||
-        categoryNames.includes('toddler') || categoryNames.includes('newborn') ||
-        categoryNames.includes('kids') || categoryNames.includes('children')) {
+    if (bottomRowBgColor) return bottomRowBgColor;
+    const categoryNames = categoryLinks.map((link) => link.name.toLowerCase()).join(" ");
+    if (categoryNames.includes("baby") || categoryNames.includes("infant") ||
+        categoryNames.includes("toddler") || categoryNames.includes("newborn") ||
+        categoryNames.includes("kids") || categoryNames.includes("children")) {
       return "rgba(188, 80, 144, 1)";
     }
-
-    if (categoryNames.includes('electronic') || categoryNames.includes('gadget') ||
-        categoryNames.includes('phone') || categoryNames.includes('computer') ||
-        categoryNames.includes('tech')) {
+    if (categoryNames.includes("electronic") || categoryNames.includes("tech")) {
       return "linear-gradient(135deg, #4A90E2 0%, #5BA0F2 50%, #6CB0FF 100%)";
     }
-
-    if (categoryNames.includes('fashion') || categoryNames.includes('clothing') ||
-        categoryNames.includes('apparel') || categoryNames.includes('wear') ||
-        categoryNames.includes('dress')) {
+    if (categoryNames.includes("fashion") || categoryNames.includes("clothing")) {
       return "linear-gradient(135deg, #E74C3C 0%, #EC7063 50%, #F1948A 100%)";
     }
-
-    if (categoryNames.includes('home') || categoryNames.includes('garden') ||
-        categoryNames.includes('furniture') || categoryNames.includes('decor')) {
+    if (categoryNames.includes("home") || categoryNames.includes("furniture")) {
       return "linear-gradient(135deg, #27AE60 0%, #58D68D 50%, #82E0AA 100%)";
     }
-
-    if (categoryNames.includes('sport') || categoryNames.includes('fitness') ||
-        categoryNames.includes('gym') || categoryNames.includes('outdoor')) {
+    if (categoryNames.includes("sport") || categoryNames.includes("fitness")) {
       return "linear-gradient(135deg, #E67E22 0%, #F39C12 50%, #F8C471 100%)";
     }
-
     return "linear-gradient(135deg, #9B59B6 0%, #BB8FCE 50%, #D7BDE2 100%)";
   };
+
   return (
     <nav className={styles.navbar}>
-      {/* Top Navigation Row */}
+      {/* Top Row */}
       <div className={styles.topRow} style={{ backgroundColor: topRowBgColor }}>
         <div className={styles.container}>
-          {/* Logo/Brand Section */}
+          {/* Brand Section */}
           <div className={styles.brandSection}>
-            <div className={styles.logoContainer}>
-              {/* Lion Mascot SVG */}
-              <div className={styles.lionLogo}>
-                <svg width="50" height="50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  {/* Lion face */}
-                  <circle cx="50" cy="45" r="25" fill={logoColor}/>
-                  {/* Mane */}
-                  <circle cx="35" cy="35" r="8" fill="#CD853F"/>
-                  <circle cx="65" cy="35" r="8" fill="#CD853F"/>
-                  <circle cx="30" cy="50" r="6" fill="#CD853F"/>
-                  <circle cx="70" cy="50" r="6" fill="#CD853F"/>
-                  <circle cx="40" cy="25" r="6" fill="#CD853F"/>
-                  <circle cx="60" cy="25" r="6" fill="#CD853F"/>
-                  {/* Eyes */}
-                  <circle cx="43" cy="40" r="3" fill="#000"/>
-                  <circle cx="57" cy="40" r="3" fill="#000"/>
-                  {/* Nose */}
-                  <ellipse cx="50" cy="48" rx="2" ry="1.5" fill="#000"/>
-                  {/* Mouth */}
-                  <path d="M50 52 Q45 55 40 52" stroke="#000" strokeWidth="2" fill="none"/>
-                  <path d="M50 52 Q55 55 60 52" stroke="#000" strokeWidth="2" fill="none"/>
-                  {/* Body */}
-                  <ellipse cx="50" cy="75" rx="15" ry="20" fill={logoColor}/>
-                </svg>
-              </div>
-            </div>
+            <div className={styles.logoContainer}><div className={styles.lionLogo}></div></div>
             <div className={styles.brandText}>
               <h1 className={styles.brandName} style={{ color: brandColor }}>{brandName}</h1>
               <p className={styles.tagline}>{tagline}</p>
             </div>
           </div>
 
-          {/* Main Navigation Links */}
+          {/* Main Nav Links */}
           <div className={styles.mainNavLinks}>
             {mainNavLinks.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                className={styles.mainNavLink}
-                style={{
-                  color: mainNavLinkColor,
-                  '--hover-color': mainNavLinkHoverColor
-                }}
-              >
+              <a key={index} href={link.href} className={styles.mainNavLink}
+                 style={{ color: mainNavLinkColor, "--hover-color": mainNavLinkHoverColor }}>
                 {link.name}
               </a>
             ))}
           </div>
 
-          {/* Right Section - Cart, Favorite, and Login */}
+          {/* Right Section */}
           <div className={styles.rightSection}>
             <div className={styles.favoriteIcon} onClick={handleFavoriteClick}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d={"M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"} fill={"#FF6B35"}/>
-              </svg>
+              <AiOutlineHeart size={24} color={cartIconColor} />
             </div>
-            <div className={styles.cartIcon} style={{ color: cartIconColor }} onClick={handleCartClick}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 18.1 16.1 19 15 19H9C7.9 19 7 18.1 7 17V13M17 13H7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+
+            <div className={styles.cartIcon} onClick={handleCartClick}>
+              <AiOutlineShoppingCart size={24} color={cartIconColor} />
             </div>
+
             <div className={styles.loginSection} onClick={handleLoginClick}>
-              <div className={styles.userIcon} style={{ color: userIconColor }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <span className={styles.loginText}>Login</span>
+              {isLoggedIn && user?.profileImageUrl ? (
+                <img src={user.profileImageUrl} alt="Profile" className={styles.profileImage} />
+              ) : (
+                <span className={styles.loginText}>{isLoggedIn ? "Account" : "Login"}</span>
+              )}
+              {isLoggedIn && isDropdownOpen && (
+                <div className={styles.dropdownMenu}>
+                  <div className={styles.dropdownItem} onClick={handleProfileClick}>Profile</div>
+                  <div className={styles.dropdownItem} onClick={handleLogout}>Logout</div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Navigation Row - Category Links */}
-      <div
-        className={styles.bottomRow}
-        style={{ background: getBottomNavColor() }}
-      >
+      {/* Bottom Row */}
+      <div className={styles.bottomRow} style={{ background: getBottomNavColor() }}>
         <div className={styles.container}>
           <div className={styles.categoryLinks}>
             {categoryLinks.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                className={styles.categoryLink}
-                style={{ color: categoryLinkColor }}
-              >
+              <a key={index} href={link.href} className={styles.categoryLink}
+                 style={{ color: categoryLinkColor }}>
                 {link.name}
               </a>
             ))}
@@ -282,17 +159,10 @@ console.log("shop name in nav", shopName);
       </div>
 
       {/* Cart Slider */}
-<Cart
-  isOpen={isCartOpen}
-  onClose={handleCloseCart}
-  shopName={shopName}
-  backgroundColor={cartBackgroundColor}
-  onCheckout={handleCheckout}
-  cartItemsSent={cartItems}          // Use cart from context
-  onUpdateQuantity={updateQuantity}   // Use context function
-  onRemoveItem={removeItem}  
-/>
-
+      <Cart isOpen={isCartOpen} onClose={handleCloseCart}
+            shopName={correctshopName[shopName]} backgroundColor={cartBackgroundColor}
+            cartItemsSent={cartItems} onUpdateQuantity={updateQuantity}
+            onRemoveItem={removeItem} isLoggedIn={isLoggedIn}/>
     </nav>
   );
 }

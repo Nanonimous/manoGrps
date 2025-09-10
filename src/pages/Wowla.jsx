@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 import { ShopNowCon_1 } from "../components/shopNowCon_1/ShopNowCon_1.jsx";
-import { ShopByNeed } from "../components/shopByNeed/ShopByNeed.jsx";
 import { WhyChoseUs } from "../components/whyChoseUs/WhyChoseUs.jsx";
-import { TopBrands } from "../components/topBrands/TopBrands.jsx";
 import Location from "../components/location/Location";
 import EnquiryForm from "../components/enquiryForm/EnquiryForm";
 import Footer from "../components/footer/Footer";
@@ -15,14 +13,14 @@ import { About_us } from "../components/About_us/About_us";
 import { TrendingHighlight } from "../components/trendingHighlight/TrendingHighlight";
 import ProductMain from "../components/product_main";
 import ShowProduct from "../components/showproduct";
-import {ProductPage} from "../components/product_page/ProductPage.jsx";
+import Favourite from "../components/Favourite";
 
 export const Wowla = () => {
   const location = useLocation();
-  const cat = location.pathname.split("/")[3] || "all";
-  
+const isProductPage = location.pathname.includes("/Wowla-store/products");
+  console.log("is product page " ,isProductPage);
+  let cat = location.pathname.split('/Wowla-store/products/')[1];
   console.log(cat);
-  const isProductPage = location.pathname.includes('/wowla/products');
 
   return (
     <div style={{
@@ -35,21 +33,22 @@ export const Wowla = () => {
         tagline="WONDERFUL WORLD OF LIFESTYLE ACCESSORIES"
         brandColor="#FF6B35"
         mainNavLinks={[
-          { name: "Home", href: "/wowla" },
-          { name: "Products", href: "/wowla/products/all" },
-          { name: "About Us", href: "/wowla/about" },
-          { name: "Contact us", href: "/wowla/contact" }
+          { name: "Home", href: "/Wowla-store" },
+          { name: "Products", href: "/Wowla-store/products/All" },
+          { name: "About Us", href: "/Wowla-store/about" },
+          { name: "Contact us", href: "/Wowla-store/contact" }
         ]}
         categoryLinks={[
-          { name: "Home Applications", href: "/wowla/products/home applications" },
-          { name: "Toys", href: "/wowla/products/toys" },
-          { name: "Return Gift's", href: "/wowla/products/return gifts" },
-          { name: "Wallpaper's", href: "/wowla/products/wallpapers" },
-          { name: "Stationaries", href: "/wowla/products/stationaries" },
-          { name: "Artificial Flowers", href: "/wowla/products/artificial flowers" }
+          { name: "Home Applications", href: "/Wowla-store/products/home application" },
+          { name: "Toys", href: "/Wowla-store/products/toys" },
+          { name: "Return Gift's", href: "/Wowla-store/products/return gift" },
+          { name: "Wallpaper's", href: "/Wowla-store/products/wallpaper" },
+          { name: "Stationaries", href: "/Wowla-store/products/stationaries" },
+          { name: "Artificial Flowers", href: "/Wowla-store/products/artificial flowers" }
         ]}
         bottomRowBgColor="rgba(53, 94, 59, 1)"
         mainNavLinkHoverColor="#FF6B35"
+        shopName="Wowla-store"
       />
       <div style={{
         paddingTop: '120px',
@@ -59,30 +58,49 @@ export const Wowla = () => {
         {isProductPage ? (
           // Product page components
           <>
-            <ProductMain
-              categoryName="Wowla Products"
-              breadcrumbHome="Home"
-              breadcrumbCurrent="Products"
-              backgroundImage="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-              backgroundColor="#F5FFFA"
-              titleColor="#ffffff"
-              breadcrumbColor="#ffffff"
-              onHomeClick={() => window.location.href = '/wowla'}
-            />
-
-            <ShowProduct
-              title="Our Products"
-              shopName="Wowla"
-              categoryName={cat || "all"}
-              backgroundColor="#F5FFFA"
-              titleColor="rgba(53, 94, 59, 1)"
-              cardTextColor="#ffffff"
-
-            />
+            {cat === "favourite" ? (
+              <>
+                <ProductMain
+                  categoryName="Wowla Favorite Products"
+                  breadcrumbHome="Home"
+                  breadcrumbCurrent="Products"
+                  backgroundImage="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                  backgroundColor="#F5FFFA"
+                  titleColor="#ffffff"
+                  breadcrumbColor="#ffffff"
+                  onHomeClick={() => window.location.href = '/Wowla-store'}
+                />
+                // Show Favourite component when category is "Favourite"
+                <Favourite storeName={"wowla"} mainColor={"rgba(53, 94, 59, 1)"}/>
+              </>
+            ) : (
+              <>
+                <ProductMain
+                  categoryName="Wowla Products"
+                  breadcrumbHome="Home"
+                  breadcrumbCurrent="Products"
+                  backgroundImage="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                  backgroundColor="#F5FFFA"
+                  titleColor="#ffffff"
+                  breadcrumbColor="#ffffff"
+                  onHomeClick={() => window.location.href = '/Wowla-store'}
+                />
+                //Show regular product display for other categories
+                <ShowProduct
+                  title="Our Products"
+                  shopName="wowla"
+                  categoryName={cat || "all"}
+                  backgroundColor="#F5FFFA"
+                  titleColor="rgba(53, 94, 59, 1)"
+                  cardTextColor="#ffffff"
+                />
+              </>
+            )}
           </>
         ) : (
+          // Home page components
           <>
-            <MainDisplay/>
+            <MainDisplay />
 
             <LookingFor
               title="What are you looking for?"
@@ -204,13 +222,14 @@ export const Wowla = () => {
               buttonBgColor="white"
               buttonHoverColor="rgba(150, 60, 120, 1)"
             />
+
+            <Footer
+              companyName="Wowla"
+              backgroundColor="rgba(53, 94, 59, 1)"
+            />
           </>
         )}
 
-        <Footer
-          companyName="Wowla"
-          backgroundColor="rgba(53, 94, 59, 1)"
-        />
       </div>
     </div>
   );

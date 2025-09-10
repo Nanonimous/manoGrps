@@ -8,13 +8,12 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  overflow-x: hidden;
+  overflow: visible;
   box-sizing: border-box;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-height: 80px;
 }
 
-/* Desktop Container */
 .desktopContainer {
   max-width: 1200px;
   margin: 0 auto;
@@ -26,7 +25,6 @@
   box-sizing: border-box;
 }
 
-/* Mobile Container */
 .mobileContainer {
   display: none;
   flex-direction: column;
@@ -55,20 +53,14 @@
   gap: 16px;
 }
 
-/* Brand/Logo Section */
-.brand {
-  flex-shrink: 0;
-}
-
 .brand h1 {
   font-size: 24px;
   font-weight: 600;
   color: #333;
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
-/* Navigation Links */
 .navLinks {
   display: flex;
   align-items: center;
@@ -83,58 +75,14 @@
   font-size: 16px;
   font-weight: 400;
   transition: color 0.3s ease;
-  white-space: nowrap;
 }
 
 .navLink:hover {
   color: #007bff;
 }
 
-.navLink:active {
-  color: #0056b3;
-}
-
-/* Mobile Navigation Links */
-.mobileNavLink {
-  text-decoration: none;
-  color: #333;
-  font-size: 16px;
-  font-weight: 400;
-  transition: color 0.3s ease;
-  white-space: nowrap;
-  flex: 1;
-  text-align: center;
-}
-
-.mobileNavLink:hover {
-  color: #007bff;
-}
-
-.mobileNavLink:active {
-  color: #0056b3;
-}
-
-/* Right Section */
-.rightSection {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-shrink: 0;
-}
-
-.cartIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  color: #666;
-  transition: color 0.3s ease;
-}
-
-.cartIcon:hover {
-  color: #333;
+.accountWrapper {
+  position: relative;
 }
 
 .loginSection {
@@ -151,6 +99,14 @@
   background-color: #f1f3f4;
 }
 
+.profileImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e9ecef;
+}
+
 .userIcon {
   display: flex;
   align-items: center;
@@ -164,58 +120,61 @@
   font-weight: 400;
 }
 
-/* Responsive Design */
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: white;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 150px;
+  z-index: 9999;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.dropdownItem:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdownItem:first-child {
+  border-bottom: 1px solid #e9ecef;
+}
+
+/* Mobile */
 @media (max-width: 768px) {
-  /* Hide desktop layout */
   .desktopContainer {
     display: none;
   }
-
-  /* Show mobile layout */
   .mobileContainer {
     display: flex;
   }
-
-  .mobileTopRow {
-    padding: 20px 16px;
-  }
-
-  .mobileBottomRow {
-    padding: 12px 16px;
-  }
-
-  .mobileNavLinks {
-    gap: 12px;
-  }
-
   .mobileNavLink {
     font-size: 14px;
+    text-align: center;
   }
-
-  .brand h1 {
-    font-size: 20px;
-  }
-
-  .rightSection {
-    gap: 16px;
-  }
-
-  /* Hide user icon on mobile, keep only text */
-  .loginSection .userIcon {
-    display: none;
+  .profileImage {
+    width: 28px;
+    height: 28px;
   }
 }
 
 @media (max-width: 480px) {
-  .mobileNavLinks {
-    gap: 8px;
-  }
-
-  .mobileNavLink {
-    font-size: 13px;
-  }
-
   .brand h1 {
     font-size: 18px;
+  }
+  .mobileNavLink {
+    font-size: 13px;
   }
 }

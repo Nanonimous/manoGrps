@@ -6,9 +6,10 @@
   right: 0;
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden;
+  /* overflow-x: hidden; ❌ remove this */
   box-sizing: border-box;
 }
+
 
 .container {
   max-width: 1200px;
@@ -144,6 +145,14 @@ box-shadow: 0px 47px 13px 0px rgba(0, 0, 0, 0);
   color: #333;
 }
 
+.profileImage {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
 .loginSection {
   display: flex;
   align-items: center;
@@ -152,6 +161,7 @@ box-shadow: 0px 47px 13px 0px rgba(0, 0, 0, 0);
   padding: 6px 12px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  position: relative;
 }
 
 .loginSection:hover {
@@ -169,6 +179,44 @@ box-shadow: 0px 47px 13px 0px rgba(0, 0, 0, 0);
   font-size: 14px;
   color: #333;
   font-weight: 500;
+}
+
+/* Dropdown Menu Styles */
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 150px;
+  z-index: 9999;   /* increase so it stays above */
+}
+
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.dropdownItem:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdownItem:first-child {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.dropdownItem svg {
+  flex-shrink: 0;
 }
 
 /* Bottom Row - Category Navigation */

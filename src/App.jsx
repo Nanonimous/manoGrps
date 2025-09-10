@@ -6,26 +6,33 @@ import { Wowla } from "./pages/Wowla.jsx";
 import { ManoStore } from "./pages/ManoStore.jsx";
 import { Authentication } from "./pages/Authentication.jsx";
 import { Payments } from "./pages/Payments.jsx";
-import PaymentTest from "./components/PaymentTest/PaymentTest.jsx"
+import PaymentTest from "./components/PaymentTest/PaymentTest.jsx";
 import { MainProduct } from "./pages/MainProduct.jsx";
+import { Profile } from "./pages/Profile.jsx";
+
+// ⬇️ import UserProvider
+import { UserProvider } from "./context/UserContext.jsx";
 
 const App = () => (
   <BrowserRouter>
-    <ShopNameProvider>
-      <Routes>
-        <Route path="/" element={<MainManoGrp />} />
-        <Route path="/liltots" element={<Liltots />} />
-        <Route path="/liltots/products/:link" element={<Liltots />} />
-        <Route path="/wowla" element={<Wowla />} />
-        <Route path="/wowla/products/:link" element={<Wowla />} />
-        <Route path="/manostore" element={<ManoStore />} />
-        <Route path="/manostore/products/:link" element={< ManoStore />} />
-        <Route path="/authentication" element={<Authentication />} />
-        <Route path="/payment" element={<Payments />} />
-        <Route path="/test" element={<PaymentTest/>}></Route>
-        <Route path="/:shopname/products/:Cat" element={<MainProduct/>} />
-      </Routes>
-    </ShopNameProvider>
+    <UserProvider>
+      <ShopNameProvider>
+        <Routes>
+          <Route path="/" element={<MainManoGrp />} />
+          <Route path="/liltots" element={<Liltots />} />
+          <Route path="/liltots/products/:link" element={<Liltots />} />
+          <Route path="/Wowla-store" element={<Wowla />} />
+          <Route path="/Wowla-store/products/:link" element={<Wowla />} />
+          <Route path="/Mano-store" element={<ManoStore />} />
+          <Route path="/Mano-store/products/:link" element={<ManoStore />} />
+          <Route path="/authentication" element={<Authentication />} />
+          <Route path="/payment" element={<Payments />} />
+          <Route path="/test" element={<PaymentTest />} />
+          <Route path="/:shopname/products/:Cat" element={<MainProduct />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </ShopNameProvider>
+    </UserProvider>
   </BrowserRouter>
 );
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './EnquiryForm.module.css';
+import axios from 'axios';
 
 const EnquiryForm = ({
   title = "Enquire Us:",
@@ -10,10 +11,9 @@ const EnquiryForm = ({
   submitButtonText = "Send Now →",
   storeOptions = [
     { value: "", label: "Select Store" },
-    { value: "pondicherry", label: "Pondicherry Store" },
-    { value: "chennai", label: "Chennai Store" },
-    { value: "bangalore", label: "Bangalore Store" },
-    { value: "online", label: "Online Store" }
+    { value: "Lil tots", label: "Lil Tots" },
+    { value: "wowla", label: "Wowla" },
+    { value: "manostore", label: "Mano Store" }
   ],
   backgroundColor = "#ffffff",
   formBackgroundColor = "rgba(150, 60, 120, 1)",
@@ -23,13 +23,9 @@ const EnquiryForm = ({
   buttonColor = "#ffffff",
   buttonBgColor = "#e91e63",
   buttonHoverColor = "#c2185b",
-  onSubmit = (formData) => {
-    console.log('Form submitted:', formData);
-    alert('Thank you for your enquiry! We will get back to you soon.');
-  },
   onValidationError = (message) => {
     alert(message);
-  }
+  },
 }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -38,8 +34,10 @@ const EnquiryForm = ({
     store: '',
     message: ''
   });
+  const [showStatus, setShowStatus] = useState("");
 
   const handleInputChange = (e) => {
+    if (showStatus !== "") setShowStatus("");
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -47,39 +45,43 @@ const EnquiryForm = ({
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation
     if (!formData.name || !formData.email || !formData.phone) {
       onValidationError('Please fill in all required fields');
       return;
     }
 
-    // Call the onSubmit prop
-    onSubmit(formData);
+    try {
+      const res = await axios.post(`https://userenquire-b5sg.onrender.com/api/enquire/add`, {
+        enquirerName: formData.name,
+        enquirerEmail: formData.email,
+        enquirerPhoneNo: formData.phone,
+        enquirerMessage: formData.message,
+        storeName: formData.store
+      });
 
-    // Reset form after successful submission
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      store: '',
-      message: ''
-    });
+      console.log(res.data);
+
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        store: '',
+        message: ''
+      });
+
+      setShowStatus("submitted successfully ✅");
+    } catch {
+      setShowStatus("not submitted ❌");
+    }
   };
 
   return (
     <div className={styles.enquiryContainer} style={{ backgroundColor }}>
       <div className={styles.enquiryHeader}>
-        <h2
-          style={{
-            color: titleColor,
-            '--title-color': titleColor
-          }}
-        >
-          {title}
-        </h2>
+        <h2 style={{ color: titleColor }}>{title}</h2>
       </div>
 
       <form
@@ -95,10 +97,7 @@ const EnquiryForm = ({
             value={formData.name}
             onChange={handleInputChange}
             className={styles.inputField}
-            style={{
-              borderColor: inputBorderColor,
-              '--focus-color': inputFocusColor
-            }}
+            style={{ borderColor: inputBorderColor, '--focus-color': inputFocusColor }}
             required
           />
           <input
@@ -108,10 +107,7 @@ const EnquiryForm = ({
             value={formData.email}
             onChange={handleInputChange}
             className={styles.inputField}
-            style={{
-              borderColor: inputBorderColor,
-              '--focus-color': inputFocusColor
-            }}
+            style={{ borderColor: inputBorderColor, '--focus-color': inputFocusColor }}
             required
           />
           <input
@@ -121,10 +117,7 @@ const EnquiryForm = ({
             value={formData.phone}
             onChange={handleInputChange}
             className={styles.inputField}
-            style={{
-              borderColor: inputBorderColor,
-              '--focus-color': inputFocusColor
-            }}
+            style={{ borderColor: inputBorderColor, '--focus-color': inputFocusColor }}
             required
           />
           <select
@@ -132,10 +125,7 @@ const EnquiryForm = ({
             value={formData.store}
             onChange={handleInputChange}
             className={styles.selectField}
-            style={{
-              borderColor: inputBorderColor,
-              '--focus-color': inputFocusColor
-            }}
+            style={{ borderColor: inputBorderColor, '--focus-color': inputFocusColor }}
           >
             {storeOptions.map((option, index) => (
               <option key={index} value={option.value}>
@@ -152,10 +142,7 @@ const EnquiryForm = ({
             value={formData.message}
             onChange={handleInputChange}
             className={styles.messageField}
-            style={{
-              borderColor: inputBorderColor,
-              '--focus-color': inputFocusColor
-            }}
+            style={{ borderColor: inputBorderColor, '--focus-color': inputFocusColor }}
             rows="4"
           />
         </div>
@@ -164,14 +151,16 @@ const EnquiryForm = ({
           <button
             type="submit"
             className={styles.submitBtn}
-            style={{
-              color: buttonColor,
-              backgroundColor: buttonBgColor,
-              '--hover-color': buttonHoverColor
-            }}
+            style={{ color: buttonColor, backgroundColor: buttonBgColor, '--hover-color': buttonHoverColor }}
           >
             {submitButtonText}
           </button>
+
+          {showStatus && (
+            <p className={`${styles.statusMessage} ${showStatus.includes("success") ? styles.success : styles.error}`}>
+              {showStatus}
+            </p>
+          )}
         </div>
       </form>
     </div>
